@@ -1,0 +1,294 @@
+<html>
+<head>
+  <title>Blender Knob</title>
+  <meta charset="utf-8">
+</head>
+</body>
+<p><header style="text-align: center;">
+<h1 class="title">Blender Knob</h1>
+<h2 class="subtitle">and Post-Processing with ImageMagick</h2>
+<style>
+
+body {
+  font-family: Roboto Slab !important;
+  
+}
+
+</style>
+<!-- github-like md.css -->
+<link rel="stylesheet" type="text/css" href="data:text/css;base64,LyogMjAxNDA5MDUgR2l0aHViIE1hcmtkb3duIENTUyAqLw0KYm9keQ0Kew0KICBmb250LXNpemU6MTVweDsNCiAgbGluZS1oZWlnaHQ6MS43Ow0KICBvdmVyZmxvdy14OmhpZGRlbjsNCg0KICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlOw0KICAgIGJvcmRlci1yYWRpdXM6IDNweDsNCiAgICBib3JkZXI6IDNweCBzb2xpZCAjRUVFOw0KICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMCAwIDFweCAjQ0VDRUNFOw0KICAgIGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2EsIGFyaWFsLCBmcmVlc2FucywgY2xlYW4sIHNhbnMtc2VyaWY7DQogICAgbWF4LXdpZHRoOiA5MTJweDsNCiAgICBwYWRkaW5nOiAzMHB4Ow0KICAgIG1hcmdpbjogMmVtIGF1dG87DQoNCiAgICBjb2xvcjojMzMzMzMzOw0KfQ0KDQoNCi5ib2R5LWNsYXNzaWN7DQogIGNvbG9yOiM0NDQ7DQogIGZvbnQtZmFtaWx5Okdlb3JnaWEsIFBhbGF0aW5vLCAnUGFsYXRpbm8gTGlub3R5cGUnLCBUaW1lcywgJ1RpbWVzIE5ldyBSb21hbicsICJIaXJhZ2lubyBTYW5zIEdCIiwgIlNUWGloZWkiLCAi5b6u6L2v6ZuF6buRIiwgc2VyaWY7DQogIGZvbnQtc2l6ZToxNnB4Ow0KICBsaW5lLWhlaWdodDoxLjVlbTsNCiAgYmFja2dyb3VuZDojZmVmZWZlOw0KICB3aWR0aDogNDVlbTsNCiAgbWFyZ2luOiAxMHB4IGF1dG87DQogIHBhZGRpbmc6IDFlbTsNCiAgb3V0bGluZTogMTMwMHB4IHNvbGlkICNGQUZBRkE7DQp9DQoNCmJvZHk+OmZpcnN0LWNoaWxkDQp7DQogIG1hcmdpbi10b3A6MCFpbXBvcnRhbnQ7DQp9DQoNCmJvZHk+Omxhc3QtY2hpbGQNCnsNCiAgbWFyZ2luLWJvdHRvbTowIWltcG9ydGFudDsNCn0NCg0KYmxvY2txdW90ZSxkbCxvbCxwLHByZSx0YWJsZSx1bCB7DQogIGJvcmRlcjogMDsNCiAgbWFyZ2luOiAxNXB4IDA7DQogIHBhZGRpbmc6IDA7DQp9DQoNCmJvZHkgYSB7DQogIGNvbG9yOiAjNDE4M2M0Ow0KICB0ZXh0LWRlY29yYXRpb246IG5vbmU7DQp9DQoNCmJvZHkgYTpob3ZlciB7DQogIHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOw0KfQ0KDQpib2R5IGEuYWJzZW50DQp7DQogIGNvbG9yOiNjMDA7DQp9DQoNCmJvZHkgYS5hbmNob3INCnsNCiAgZGlzcGxheTpibG9jazsNCiAgcGFkZGluZy1sZWZ0OjMwcHg7DQogIG1hcmdpbi1sZWZ0Oi0zMHB4Ow0KICBjdXJzb3I6cG9pbnRlcjsNCiAgcG9zaXRpb246YWJzb2x1dGU7DQogIHRvcDowOw0KICBsZWZ0OjA7DQogIGJvdHRvbTowDQp9DQoNCi8qaDQsaDUsaDZ7IGZvbnQtd2VpZ2h0OiBib2xkOyB9Ki8NCg0KLm9jdGljb257DQogIGZvbnQ6bm9ybWFsIG5vcm1hbCAxNnB4IHNhbnMtc2VyaWY7DQogIHdpZHRoOiAxZW07DQogIGhlaWdodDogMWVtOw0KICBsaW5lLWhlaWdodDoxOw0KICBkaXNwbGF5OmlubGluZS1ibG9jazsNCiAgdGV4dC1kZWNvcmF0aW9uOm5vbmU7DQogIC13ZWJraXQtZm9udC1zbW9vdGhpbmc6YW50aWFsaWFzZWQNCn0NCg0KLm9jdGljb24tbGluayB7DQogIGJhY2tncm91bmQ6IHVybCgiZGF0YTppbWFnZS9zdmcreG1sO3V0ZjgsPD94bWwgdmVyc2lvbj0nMS4wJyBzdGFuZGFsb25lPSdubyc/PiA8IURPQ1RZUEUgc3ZnIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICdodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQnPiA8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMjQgODMyJz4gPG1ldGFkYXRhPkNvcHlyaWdodCAoQykgMjAxMyBieSBHaXRIdWI8L21ldGFkYXRhPiA8IS0tIHNjYWxlKDAuMDE1NjU1NTc3Mjk5NDEpIC0tPiA8cGF0aCB0cmFuc2Zvcm09JycgZD0nTTc2OCA2NGgtMTkycy0yNTQgMC0yNTYgMjU2YzAgMjIgMyA0MyA4IDY0aDEzN2MtMTEtMTktMTgtNDEtMTgtNjQgMC0xMjggMTI4LTEyOCAxMjgtMTI4aDE5MnMxMjggMCAxMjggMTI4LTEyOCAxMjgtMTI4IDEyOCAwIDY0LTY0IDEyOGg2NHMyNTYgMCAyNTYtMjU2LTI1Ni0yNTYtMjU2LTI1NnogbS03MiAxOTJoLTEzN2MxMSAxOSAxOCA0MSAxOCA2NCAwIDEyOC0xMjggMTI4LTEyOCAxMjhoLTE5MnMtMTI4IDAtMTI4LTEyOCAxMjgtMTI4IDEyOC0xMjgtNC02NSA2Ni0xMjhoLTY2cy0yNTYgMC0yNTYgMjU2IDI1NiAyNTYgMjU2IDI1NmgxOTJzMjU2IDAgMjU2LTI1NmMwLTIyLTQtNDQtOC02NHonLz4gPC9zdmc+Iik7DQogIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjsNCiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDsNCiAgYmFja2dyb3VuZC1wb3NpdGlvbjogYm90dG9tOw0KfQ0KDQoub2N0aWNvbi1saW5rOmJlZm9yZXsNCiAgY29udGVudDonXGEwJzsNCn0NCg0KYm9keSBoMSxib2R5IGgyLGJvZHkgaDMsYm9keSBoNCxib2R5IGg1LGJvZHkgaDZ7DQogIG1hcmdpbjoxZW0gMCAxNXB4Ow0KICBwYWRkaW5nOjA7DQogIGZvbnQtd2VpZ2h0OmJvbGQ7DQogIGxpbmUtaGVpZ2h0OjEuNzsNCiAgY3Vyc29yOnRleHQ7DQogIHBvc2l0aW9uOnJlbGF0aXZlDQp9DQoNCmJvZHkgaDEgLm9jdGljb24tbGluayxib2R5IGgyIC5vY3RpY29uLWxpbmssYm9keSBoMyAub2N0aWNvbi1saW5rLGJvZHkgaDQgLm9jdGljb24tbGluayxib2R5IGg1IC5vY3RpY29uLWxpbmssYm9keSBoNiAub2N0aWNvbi1saW5rew0KICBkaXNwbGF5Om5vbmU7DQogIGNvbG9yOiMwMDANCn0NCg0KYm9keSBoMTpob3ZlciBhLmFuY2hvcixib2R5IGgyOmhvdmVyIGEuYW5jaG9yLGJvZHkgaDM6aG92ZXIgYS5hbmNob3IsYm9keSBoNDpob3ZlciBhLmFuY2hvcixib2R5IGg1OmhvdmVyIGEuYW5jaG9yLGJvZHkgaDY6aG92ZXIgYS5hbmNob3J7DQogIHRleHQtZGVjb3JhdGlvbjpub25lOw0KICBsaW5lLWhlaWdodDoxOw0KICBwYWRkaW5nLWxlZnQ6MDsNCiAgbWFyZ2luLWxlZnQ6LTIycHg7DQogIHRvcDoxNSUNCn0NCg0KYm9keSBoMTpob3ZlciBhLmFuY2hvciAub2N0aWNvbi1saW5rLGJvZHkgaDI6aG92ZXIgYS5hbmNob3IgLm9jdGljb24tbGluayxib2R5IGgzOmhvdmVyIGEuYW5jaG9yIC5vY3RpY29uLWxpbmssYm9keSBoNDpob3ZlciBhLmFuY2hvciAub2N0aWNvbi1saW5rLGJvZHkgaDU6aG92ZXIgYS5hbmNob3IgLm9jdGljb24tbGluayxib2R5IGg2OmhvdmVyIGEuYW5jaG9yIC5vY3RpY29uLWxpbmt7DQogIGRpc3BsYXk6aW5saW5lLWJsb2NrDQp9DQoNCmJvZHkgaDEgdHQsYm9keSBoMSBjb2RlLGJvZHkgaDIgdHQsYm9keSBoMiBjb2RlLGJvZHkgaDMgdHQsYm9keSBoMyBjb2RlLGJvZHkgaDQgdHQsYm9keSBoNCBjb2RlLGJvZHkgaDUgdHQsYm9keSBoNSBjb2RlLGJvZHkgaDYgdHQsYm9keSBoNiBjb2Rlew0KICBmb250LXNpemU6aW5oZXJpdA0KfQ0KDQpib2R5IGgxew0KICBmb250LXNpemU6Mi41ZW07DQogIGJvcmRlci1ib3R0b206MXB4IHNvbGlkICNkZGQNCn0NCg0KYm9keSBoMnsNCiAgZm9udC1zaXplOjJlbTsNCiAgYm9yZGVyLWJvdHRvbToxcHggc29saWQgI2VlZQ0KfQ0KDQpib2R5IGgzew0KICBmb250LXNpemU6MS41ZW0NCn0NCg0KYm9keSBoNHsNCiAgZm9udC1zaXplOjEuMmVtDQp9DQoNCmJvZHkgaDV7DQogIGZvbnQtc2l6ZToxZW0NCn0NCg0KYm9keSBoNnsNCiAgY29sb3I6Izc3NzsNCiAgZm9udC1zaXplOjFlbQ0KfQ0KDQpib2R5IHAsYm9keSBibG9ja3F1b3RlLGJvZHkgdWwsYm9keSBvbCxib2R5IGRsLGJvZHkgdGFibGUsYm9keSBwcmV7DQogIG1hcmdpbjoxNXB4IDANCn0NCg0KYm9keSBoMSB0dCxib2R5IGgxIGNvZGUsYm9keSBoMiB0dCxib2R5IGgyIGNvZGUsYm9keSBoMyB0dCxib2R5IGgzIGNvZGUsYm9keSBoNCB0dCxib2R5IGg0IGNvZGUsYm9keSBoNSB0dCxib2R5IGg1IGNvZGUsYm9keSBoNiB0dCxib2R5IGg2IGNvZGUNCnsNCiAgZm9udC1zaXplOmluaGVyaXQ7DQp9DQoNCg0KYm9keSBocg0Kew0KICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFBWUFBQUFFQ0FZQUFBQ3RCRTVEQUFBQUdYUkZXSFJUYjJaMGQyRnlaUUJCWkc5aVpTQkpiV0ZuWlZKbFlXUjVjY2xsUEFBQUF5SnBWRmgwV0UxTU9tTnZiUzVoWkc5aVpTNTRiWEFBQUFBQUFEdy9lSEJoWTJ0bGRDQmlaV2RwYmowaTc3dS9JaUJwWkQwaVZ6Vk5NRTF3UTJWb2FVaDZjbVZUZWs1VVkzcHJZemxrSWo4K0lEeDRPbmh0Y0cxbGRHRWdlRzFzYm5NNmVEMGlZV1J2WW1VNmJuTTZiV1YwWVM4aUlIZzZlRzF3ZEdzOUlrRmtiMkpsSUZoTlVDQkRiM0psSURVdU1DMWpNRFl3SURZeExqRXpORGMzTnl3Z01qQXhNQzh3TWk4eE1pMHhOem96TWpvd01DQWdJQ0FnSUNBZ0lqNGdQSEprWmpwU1JFWWdlRzFzYm5NNmNtUm1QU0pvZEhSd09pOHZkM2QzTG5jekxtOXlaeTh4T1RrNUx6QXlMekl5TFhKa1ppMXplVzUwWVhndGJuTWpJajRnUEhKa1pqcEVaWE5qY21sd2RHbHZiaUJ5WkdZNllXSnZkWFE5SWlJZ2VHMXNibk02ZUcxd1BTSm9kSFJ3T2k4dmJuTXVZV1J2WW1VdVkyOXRMM2hoY0M4eExqQXZJaUI0Yld4dWN6cDRiWEJOVFQwaWFIUjBjRG92TDI1ekxtRmtiMkpsTG1OdmJTOTRZWEF2TVM0d0wyMXRMeUlnZUcxc2JuTTZjM1JTWldZOUltaDBkSEE2THk5dWN5NWhaRzlpWlM1amIyMHZlR0Z3THpFdU1DOXpWSGx3WlM5U1pYTnZkWEpqWlZKbFppTWlJSGh0Y0RwRGNtVmhkRzl5Vkc5dmJEMGlRV1J2WW1VZ1VHaHZkRzl6YUc5d0lFTlROU0JOWVdOcGJuUnZjMmdpSUhodGNFMU5Pa2x1YzNSaGJtTmxTVVE5SW5odGNDNXBhV1E2T0VORFJqTkJOMEUyTlRaQk1URkZNRUkzUWpSQk9ETTROekpETWpsR05EZ2lJSGh0Y0UxTk9rUnZZM1Z0Wlc1MFNVUTlJbmh0Y0M1a2FXUTZPRU5EUmpOQk4wSTJOVFpCTVRGRk1FSTNRalJCT0RNNE56SkRNamxHTkRnaVBpQThlRzF3VFUwNlJHVnlhWFpsWkVaeWIyMGdjM1JTWldZNmFXNXpkR0Z1WTJWSlJEMGllRzF3TG1scFpEbzRRME5HTTBFM09EWTFOa0V4TVVVd1FqZENORUU0TXpnM01rTXlPVVkwT0NJZ2MzUlNaV1k2Wkc5amRXMWxiblJKUkQwaWVHMXdMbVJwWkRvNFEwTkdNMEUzT1RZMU5rRXhNVVV3UWpkQ05FRTRNemczTWtNeU9VWTBPQ0l2UGlBOEwzSmtaanBFWlhOamNtbHdkR2x2Ymo0Z1BDOXlaR1k2VWtSR1BpQThMM2c2ZUcxd2JXVjBZVDRnUEQ5NGNHRmphMlYwSUdWdVpEMGljaUkvUHFxZXpzVUFBQUFmU1VSQlZIamFZbVJBQmNZd0JpTTJRU0E0eTRoTkVLWURReEFFQUFJTUFITkdBemhrUE9sWUFBQUFBRWxGVGtTdVFtQ0MpOw0KICBiYWNrZ3JvdW5kLXJlcGVhdDogcmVwZWF0LXg7DQogIC8qYmFja2dyb3VuZDp0cmFuc3BhcmVudCB1cmwoaHR0cDovL292ZXJibG93bi5uZXQvZmlsZXMvbWFya2Rvd24vZGlydHktc2hhZGUucG5nKSByZXBlYXQteCAwIDA7Ki8NCiAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7DQogIGJhY2tncm91bmQtcG9zaXRpb246IDA7DQogIGJvcmRlcjowIG5vbmU7DQogIGNvbG9yOiNjY2M7DQogIGhlaWdodDo0cHg7DQogIG1hcmdpbjoxNXB4IDA7DQogIHBhZGRpbmc6MDsNCn0NCg0KYm9keSBsaSBwLmZpcnN0DQp7DQogIGRpc3BsYXk6aW5saW5lLWJsb2NrOw0KfQ0KDQpib2R5IHVsLGJvZHkgb2wNCnsNCiAgcGFkZGluZy1sZWZ0OjMwcHg7DQp9DQoNCmJvZHkgdWwubm8tbGlzdCxib2R5IG9sLm5vLWxpc3QNCnsNCiAgbGlzdC1zdHlsZS10eXBlOm5vbmU7DQogIHBhZGRpbmc6MDsNCn0NCg0KYm9keSB1bCB1bCxib2R5IHVsIG9sLGJvZHkgb2wgb2wsYm9keSBvbCB1bA0Kew0KICBtYXJnaW4tYm90dG9tOjA7DQogIG1hcmdpbi10b3A6MDsNCn0NCg0KYm9keSBkbA0Kew0KICBwYWRkaW5nOjA7DQp9DQoNCmJvZHkgZGwgZHQNCnsNCiAgZm9udC1zaXplOjE0cHg7DQogIGZvbnQtc3R5bGU6aXRhbGljOw0KICBmb250LXdlaWdodDo3MDA7DQogIG1hcmdpbi10b3A6MTVweDsNCiAgcGFkZGluZzowOw0KfQ0KDQpib2R5IGRsIGRkDQp7DQogIG1hcmdpbi1ib3R0b206MTVweDsNCiAgcGFkZGluZzowIDE1cHg7DQp9DQoNCmJvZHkgYmxvY2txdW90ZQ0Kew0KICBib3JkZXItbGVmdDo0cHggc29saWQgI0RERDsNCiAgY29sb3I6Izc3NzsNCiAgcGFkZGluZzowIDE1cHg7DQp9DQoNCmJvZHkgYmxvY2txdW90ZT46Zmlyc3QtY2hpbGQNCnsNCiAgbWFyZ2luLXRvcDowOw0KfQ0KDQpib2R5IGJsb2NrcXVvdGU+Omxhc3QtY2hpbGQNCnsNCiAgbWFyZ2luLWJvdHRvbTowOw0KfQ0KDQpib2R5IHRhYmxlDQp7DQogIGRpc3BsYXk6YmxvY2s7DQogIG92ZXJmbG93OmF1dG87DQogIHdpZHRoOjEwMCU7DQogIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7DQogIGJvcmRlci1zcGFjaW5nOiAwOw0KICBwYWRkaW5nOiAwOw0KfQ0KDQpib2R5IHRhYmxlIHRoDQp7DQogIGZvbnQtd2VpZ2h0OjcwMDsNCn0NCg0KYm9keSB0YWJsZSB0aCxib2R5IHRhYmxlIHRkDQp7DQogIGJvcmRlcjoxcHggc29saWQgI2RkZDsNCiAgcGFkZGluZzo2cHggMTNweDsNCn0NCg0KYm9keSB0YWJsZSB0cg0Kew0KICBiYWNrZ3JvdW5kLWNvbG9yOiNmZmY7DQogIGJvcmRlci10b3A6MXB4IHNvbGlkICNjY2M7DQp9DQoNCmJvZHkgdGFibGUgdHI6bnRoLWNoaWxkKDJuKQ0Kew0KICBiYWNrZ3JvdW5kLWNvbG9yOiNmOGY4Zjg7DQp9DQoNCmJvZHkgaW1nDQp7DQogIC1tb3otYm94LXNpemluZzpib3JkZXItYm94Ow0KICBib3gtc2l6aW5nOmJvcmRlci1ib3g7DQogIG1heC13aWR0aDoxMDAlOw0KfQ0KDQpib2R5IHNwYW4uZnJhbWUNCnsNCiAgZGlzcGxheTpibG9jazsNCiAgb3ZlcmZsb3c6aGlkZGVuOw0KfQ0KDQpib2R5IHNwYW4uZnJhbWU+c3Bhbg0Kew0KICBib3JkZXI6MXB4IHNvbGlkICNkZGQ7DQogIGRpc3BsYXk6YmxvY2s7DQogIGZsb2F0OmxlZnQ7DQogIG1hcmdpbjoxM3B4IDAgMDsNCiAgb3ZlcmZsb3c6aGlkZGVuOw0KICBwYWRkaW5nOjdweDsNCiAgd2lkdGg6YXV0bzsNCn0NCg0KYm9keSBzcGFuLmZyYW1lIHNwYW4gaW1nDQp7DQogIGRpc3BsYXk6YmxvY2s7DQogIGZsb2F0OmxlZnQ7DQp9DQoNCmJvZHkgc3Bhbi5mcmFtZSBzcGFuIHNwYW4NCnsNCiAgY2xlYXI6Ym90aDsNCiAgY29sb3I6IzMzMzsNCiAgZGlzcGxheTpibG9jazsNCiAgcGFkZGluZzo1cHggMCAwOw0KfQ0KDQpib2R5IHNwYW4uYWxpZ24tY2VudGVyDQp7DQogIGNsZWFyOmJvdGg7DQogIGRpc3BsYXk6YmxvY2s7DQogIG92ZXJmbG93OmhpZGRlbjsNCn0NCg0KYm9keSBzcGFuLmFsaWduLWNlbnRlcj5zcGFuDQp7DQogIGRpc3BsYXk6YmxvY2s7DQogIG1hcmdpbjoxM3B4IGF1dG8gMDsNCiAgb3ZlcmZsb3c6aGlkZGVuOw0KICB0ZXh0LWFsaWduOmNlbnRlcjsNCn0NCg0KYm9keSBzcGFuLmFsaWduLWNlbnRlciBzcGFuIGltZw0Kew0KICBtYXJnaW46MCBhdXRvOw0KICB0ZXh0LWFsaWduOmNlbnRlcjsNCn0NCg0KYm9keSBzcGFuLmFsaWduLXJpZ2h0DQp7DQogIGNsZWFyOmJvdGg7DQogIGRpc3BsYXk6YmxvY2s7DQogIG92ZXJmbG93OmhpZGRlbjsNCn0NCg0KYm9keSBzcGFuLmFsaWduLXJpZ2h0PnNwYW4NCnsNCiAgZGlzcGxheTpibG9jazsNCiAgbWFyZ2luOjEzcHggMCAwOw0KICBvdmVyZmxvdzpoaWRkZW47DQogIHRleHQtYWxpZ246cmlnaHQ7DQp9DQoNCmJvZHkgc3Bhbi5hbGlnbi1yaWdodCBzcGFuIGltZw0Kew0KICBtYXJnaW46MDsNCiAgdGV4dC1hbGlnbjpyaWdodDsNCn0NCg0KYm9keSBzcGFuLmZsb2F0LWxlZnQNCnsNCiAgZGlzcGxheTpibG9jazsNCiAgZmxvYXQ6bGVmdDsNCiAgbWFyZ2luLXJpZ2h0OjEzcHg7DQogIG92ZXJmbG93OmhpZGRlbjsNCn0NCg0KYm9keSBzcGFuLmZsb2F0LWxlZnQgc3Bhbg0Kew0KICBtYXJnaW46MTNweCAwIDA7DQp9DQoNCmJvZHkgc3Bhbi5mbG9hdC1yaWdodA0Kew0KICBkaXNwbGF5OmJsb2NrOw0KICBmbG9hdDpyaWdodDsNCiAgbWFyZ2luLWxlZnQ6MTNweDsNCiAgb3ZlcmZsb3c6aGlkZGVuOw0KfQ0KDQpib2R5IHNwYW4uZmxvYXQtcmlnaHQ+c3Bhbg0Kew0KICBkaXNwbGF5OmJsb2NrOw0KICBtYXJnaW46MTNweCBhdXRvIDA7DQogIG92ZXJmbG93OmhpZGRlbjsNCiAgdGV4dC1hbGlnbjpyaWdodDsNCn0NCg0KYm9keSBjb2RlLGJvZHkgdHQNCnsNCiAgYmFja2dyb3VuZC1jb2xvcjojZjhmOGY4Ow0KICBib3JkZXI6MXB4IHNvbGlkICNkZGQ7DQogIGJvcmRlci1yYWRpdXM6M3B4Ow0KICBtYXJnaW46MCAycHg7DQogIHBhZGRpbmc6MCA1cHg7DQp9DQoNCmJvZHkgY29kZQ0Kew0KICB3aGl0ZS1zcGFjZTpub3dyYXA7DQp9DQoNCg0KY29kZSxwcmV7DQogIGZvbnQtZmFtaWx5OkNvbnNvbGFzLCAiTGliZXJhdGlvbiBNb25vIiwgQ291cmllciwgbW9ub3NwYWNlOw0KICBmb250LXNpemU6MTJweA0KfQ0KDQpib2R5IHByZT5jb2RlDQp7DQogIGJhY2tncm91bmQ6dHJhbnNwYXJlbnQ7DQogIGJvcmRlcjpub25lOw0KICBtYXJnaW46MDsNCiAgcGFkZGluZzowOw0KICB3aGl0ZS1zcGFjZTpwcmU7DQp9DQoNCmJvZHkgLmhpZ2hsaWdodCBwcmUsYm9keSBwcmUNCnsNCiAgYmFja2dyb3VuZC1jb2xvcjojZjhmOGY4Ow0KICBib3JkZXI6MXB4IHNvbGlkICNkZGQ7DQogIGZvbnQtc2l6ZToxM3B4Ow0KICBsaW5lLWhlaWdodDoxOXB4Ow0KICBvdmVyZmxvdzphdXRvOw0KICBwYWRkaW5nOjZweCAxMHB4Ow0KICBib3JkZXItcmFkaXVzOjNweA0KfQ0KDQpib2R5IHByZSBjb2RlLGJvZHkgcHJlIHR0DQp7DQogIGJhY2tncm91bmQtY29sb3I6dHJhbnNwYXJlbnQ7DQogIGJvcmRlcjpub25lOw0KICBtYXJnaW46MDsNCiAgcGFkZGluZzowOw0KfQ0KDQpib2R5IC50YXNrLWxpc3R7DQogIGxpc3Qtc3R5bGUtdHlwZTpub25lOw0KICBwYWRkaW5nLWxlZnQ6MTBweA0KfQ0KDQoudGFzay1saXN0LWl0ZW17DQogIHBhZGRpbmctbGVmdDoyMHB4DQp9DQoNCi50YXNrLWxpc3QtaXRlbSBsYWJlbHsNCiAgZm9udC13ZWlnaHQ6bm9ybWFsDQp9DQoNCi50YXNrLWxpc3QtaXRlbS5lbmFibGVkIGxhYmVsew0KICBjdXJzb3I6cG9pbnRlcg0KfQ0KDQoudGFzay1saXN0LWl0ZW0rLnRhc2stbGlzdC1pdGVtew0KICBtYXJnaW4tdG9wOjVweA0KfQ0KDQoudGFzay1saXN0LWl0ZW0tY2hlY2tib3h7DQogIGZsb2F0OmxlZnQ7DQogIG1hcmdpbi1sZWZ0Oi0yMHB4Ow0KICBtYXJnaW4tdG9wOjdweA0KfQ0KDQoNCi5oaWdobGlnaHR7DQogIGJhY2tncm91bmQ6I2ZmZmZmZg0KfQ0KDQouaGlnaGxpZ2h0IC5jew0KICBjb2xvcjojOTk5OTg4Ow0KICBmb250LXN0eWxlOml0YWxpYw0KfQ0KDQouaGlnaGxpZ2h0IC5lcnJ7DQogIGNvbG9yOiNhNjE3MTc7DQogIGJhY2tncm91bmQtY29sb3I6I2UzZDJkMg0KfQ0KDQouaGlnaGxpZ2h0IC5rew0KICBmb250LXdlaWdodDpib2xkDQp9DQoNCi5oaWdobGlnaHQgLm97DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAuY217DQogIGNvbG9yOiM5OTk5ODg7DQogIGZvbnQtc3R5bGU6aXRhbGljDQp9DQoNCi5oaWdobGlnaHQgLmNwew0KICBjb2xvcjojOTk5OTk5Ow0KICBmb250LXdlaWdodDpib2xkDQp9DQoNCi5oaWdobGlnaHQgLmMxew0KICBjb2xvcjojOTk5OTg4Ow0KICBmb250LXN0eWxlOml0YWxpYw0KfQ0KDQouaGlnaGxpZ2h0IC5jc3sNCiAgY29sb3I6Izk5OTk5OTsNCiAgZm9udC13ZWlnaHQ6Ym9sZDsNCiAgZm9udC1zdHlsZTppdGFsaWMNCn0NCg0KLmhpZ2hsaWdodCAuZ2R7DQogIGNvbG9yOiMwMDAwMDA7DQogIGJhY2tncm91bmQtY29sb3I6I2ZmZGRkZA0KfQ0KDQouaGlnaGxpZ2h0IC5nZCAueHsNCiAgY29sb3I6IzAwMDAwMDsNCiAgYmFja2dyb3VuZC1jb2xvcjojZmZhYWFhDQp9DQoNCi5oaWdobGlnaHQgLmdlew0KICBmb250LXN0eWxlOml0YWxpYw0KfQ0KDQouaGlnaGxpZ2h0IC5ncnsNCiAgY29sb3I6I2FhMDAwMA0KfQ0KDQouaGlnaGxpZ2h0IC5naHsNCiAgY29sb3I6Izk5OTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5naXsNCiAgY29sb3I6IzAwMDAwMDsNCiAgYmFja2dyb3VuZC1jb2xvcjojZGRmZmRkDQp9DQoNCi5oaWdobGlnaHQgLmdpIC54ew0KICBjb2xvcjojMDAwMDAwOw0KICBiYWNrZ3JvdW5kLWNvbG9yOiNhYWZmYWENCn0NCg0KLmhpZ2hsaWdodCAuZ297DQogIGNvbG9yOiM4ODg4ODgNCn0NCg0KLmhpZ2hsaWdodCAuZ3B7DQogIGNvbG9yOiM1NTU1NTUNCn0NCg0KLmhpZ2hsaWdodCAuZ3N7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAuZ3V7DQogIGNvbG9yOiM4MDAwODA7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAuZ3R7DQogIGNvbG9yOiNhYTAwMDANCn0NCg0KLmhpZ2hsaWdodCAua2N7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAua2R7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAua257DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAua3B7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAua3J7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAua3R7DQogIGNvbG9yOiM0NDU1ODg7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAubXsNCiAgY29sb3I6IzAwOTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5zew0KICBjb2xvcjojZDE0DQp9DQoNCi5oaWdobGlnaHQgLm57DQogIGNvbG9yOiMzMzMzMzMNCn0NCg0KLmhpZ2hsaWdodCAubmF7DQogIGNvbG9yOiMwMDgwODANCn0NCg0KLmhpZ2hsaWdodCAubmJ7DQogIGNvbG9yOiMwMDg2QjMNCn0NCg0KLmhpZ2hsaWdodCAubmN7DQogIGNvbG9yOiM0NDU1ODg7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAubm97DQogIGNvbG9yOiMwMDgwODANCn0NCg0KLmhpZ2hsaWdodCAubml7DQogIGNvbG9yOiM4MDAwODANCn0NCg0KLmhpZ2hsaWdodCAubmV7DQogIGNvbG9yOiM5OTAwMDA7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAubmZ7DQogIGNvbG9yOiM5OTAwMDA7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAubm57DQogIGNvbG9yOiM1NTU1NTUNCn0NCg0KLmhpZ2hsaWdodCAubnR7DQogIGNvbG9yOiMwMDAwODANCn0NCg0KLmhpZ2hsaWdodCAubnZ7DQogIGNvbG9yOiMwMDgwODANCn0NCg0KLmhpZ2hsaWdodCAub3d7DQogIGZvbnQtd2VpZ2h0OmJvbGQNCn0NCg0KLmhpZ2hsaWdodCAud3sNCiAgY29sb3I6I2JiYmJiYg0KfQ0KDQouaGlnaGxpZ2h0IC5tZnsNCiAgY29sb3I6IzAwOTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5taHsNCiAgY29sb3I6IzAwOTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5taXsNCiAgY29sb3I6IzAwOTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5tb3sNCiAgY29sb3I6IzAwOTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5zYnsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zY3sNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zZHsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zMnsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zZXsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zaHsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zaXsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zeHsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zcnsNCiAgY29sb3I6IzAwOTkyNg0KfQ0KDQouaGlnaGxpZ2h0IC5zMXsNCiAgY29sb3I6I2QxNA0KfQ0KDQouaGlnaGxpZ2h0IC5zc3sNCiAgY29sb3I6Izk5MDA3Mw0KfQ0KDQouaGlnaGxpZ2h0IC5icHsNCiAgY29sb3I6Izk5OTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC52Y3sNCiAgY29sb3I6IzAwODA4MA0KfQ0KDQouaGlnaGxpZ2h0IC52Z3sNCiAgY29sb3I6IzAwODA4MA0KfQ0KDQouaGlnaGxpZ2h0IC52aXsNCiAgY29sb3I6IzAwODA4MA0KfQ0KDQouaGlnaGxpZ2h0IC5pbHsNCiAgY29sb3I6IzAwOTk5OQ0KfQ0KDQouaGlnaGxpZ2h0IC5nY3sNCiAgY29sb3I6Izk5OTsNCiAgYmFja2dyb3VuZC1jb2xvcjojRUFGMkY1DQp9DQoNCi50eXBlLWNzaGFycCAuaGlnaGxpZ2h0IC5rew0KICBjb2xvcjojMDAwMEZGDQp9DQoNCi50eXBlLWNzaGFycCAuaGlnaGxpZ2h0IC5rdHsNCiAgY29sb3I6IzAwMDBGRg0KfQ0KDQoudHlwZS1jc2hhcnAgLmhpZ2hsaWdodCAubmZ7DQogIGNvbG9yOiMwMDAwMDA7DQogIGZvbnQtd2VpZ2h0Om5vcm1hbA0KfQ0KDQoudHlwZS1jc2hhcnAgLmhpZ2hsaWdodCAubmN7DQogIGNvbG9yOiMyQjkxQUYNCn0NCg0KLnR5cGUtY3NoYXJwIC5oaWdobGlnaHQgLm5uew0KICBjb2xvcjojMDAwMDAwDQp9DQoNCi50eXBlLWNzaGFycCAuaGlnaGxpZ2h0IC5zew0KICBjb2xvcjojQTMxNTE1DQp9DQoNCi50eXBlLWNzaGFycCAuaGlnaGxpZ2h0IC5zY3sNCiAgY29sb3I6I0EzMTUxNQ0KfQ==">
+<!--
+<span class="author">tfw</span>
+-->
+<span class="date" style='float:right'>20160306</span>
+</header>
+
+<nav id="TOC">
+<h3>TOC</h3>
+<ul>
+<li><a href="#things-i-might-forget-again-blender">THINGS I MIGHT FORGET AGAIN (Blender)</a></li>
+<li><a href="#blending">BLENDING</a></li>
+<li><a href="#scripts-overview">Scripts Overview</a></li>
+<li><a href="#tips">TIPS</a><ul>
+<li><a href="#some-texturing-notes">SOME TEXTURING NOTES</a></li>
+<li><a href="#some-math">SOME MATH</a></li>
+</ul></li>
+<li><a href="#scripts">Scripts</a><ul>
+<li><a href="#about-them">About them</a></li>
+<li><a href="#image-magick-under-msys2">Image-Magick under msys2</a></li>
+<li><a href="#how-i-got-the-following-list-of-files">How I got the following list of files…</a></li>
+<li><a href="#working-x86-image-magick-for-msys2">Working x86 Image Magick for msys2</a></li>
+<li><a href="#working-x64-image-magick-for-msys2">Working x64 Image Magick for msys2</a></li>
+</ul></li>
+</ul>
+</nav>
+<blockquote>
+<p>Rendering a knob in blender is simply something that I have thought about doing for VST instruments and effects for quite some time and I’m sure I’m not the only one. Obviously I’m not the only dude out there with this thought given the various plug-ins which have gotten this sort of attention regardless of the tools used.</p>
+<p>This is a basic outline of the things that I’ve learned while attempting to do this with blender and ImageMagick.</p>
+<p>Like a few of my other drafts/posts, they may be a little drafty but I hope they might make you happy anyways ;) This (I don’t beleive) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
+<p>There may well be errors in some of the process I jotted down here (a while back). This is just an initial dump of my notes with a little editing and I’m glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
+</blockquote>
+<figure>
+<img src="doc/001.jpg" alt="Example 33’rd frame; frame 32 of 64" /><figcaption>Example 33’rd frame; frame 32 of 64</figcaption>
+</figure>
+<figure>
+<img src="doc/002.png" alt="Another Example (flipped 90deg for readability)" /><figcaption>Another Example (flipped 90deg for readability)</figcaption>
+</figure>
+<h2 id="things-i-might-forget-again-blender">THINGS I MIGHT FORGET AGAIN (Blender)</h2>
+<p><strong>COPY STUFF FROM AN OBJECT TO MULTIPLE…</strong></p>
+<ul>
+<li>Select all your (target) objects</li>
+<li>Select the object you’re copying (linking) properties from.</li>
+<li>Hit <code>Ctrl+L</code> to bring up the links menu. Choose Materials.</li>
+</ul>
+<h2 id="blending">BLENDING</h2>
+<p>Scripts and the blender process(s) are known to be working with …</p>
+<figure>
+<img src="doc/003.jpg" alt="Blender Version" /><figcaption>Blender Version</figcaption>
+</figure>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">3D View: Keyboard Shortcuts</th>
+<th style="text-align: left;">keys</th>
+<th style="text-align: left;">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Apply Transformation</td>
+<td style="text-align: left;"><code>Ctrl+A</code></td>
+<td style="text-align: left;">Applies transformations such as location<br/>and rotation to an object’s mesh</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Layer Show</td>
+<td style="text-align: left;"><code>[0-9]</code> (alpha-num)</td>
+<td style="text-align: left;">show layer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Layer Toggle</td>
+<td style="text-align: left;"><code>Shift+[0-9]</code></td>
+<td style="text-align: left;">toggle layer on|off</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>INITIAL STEP</strong>
+<ul>
+<li>Start up blender.</li>
+<li>Delete the box.</li>
+<li>Set up the scene size. I used a w/h of <code>256 x 256</code>.</li>
+<li>Change Render settings modifying output path to <code>//</code> so that any images rendered will be in the same directory as the blend.</li>
+<li>Save your file.</li>
+</ul></li>
+<li><strong>LIGHT SOURCE</strong>
+<ul>
+<li>Select the default light.</li>
+<li>Change it to a Sun lamp.</li>
+<li>Change the X <code>Location</code> to 0.</li>
+<li>Change the Y <code>Location</code> to 1 or whatever you like.</li>
+<li>Change the Z <code>Location</code> to 2 or whatever you like.</li>
+<li>Change the Rotations <code>X=32, Y=0 and Z=0</code>.</li>
+<li>Note: You are going to want to customize the lighting settings when adjusting your knob’s materials and finalizing (most likely).</li>
+</ul></li>
+<li>Set up your rendering settings.
+<ul>
+<li>Press the camera button</li>
+<li>Goto the <code>Film</code> category and check the “Transparent” check-box so that we can have a transparent background.</li>
+<li>Switch the renderer to cycles for later applying to your (knob’s) materials.</li>
+</ul></li>
+<li>Design your knob
+<ul>
+<li>press 2 to go the second layer.</li>
+<li>add plane (you can enlarge it now or later to fill the camera view).</li>
+<li>press 1 to return to the first layer.</li>
+<li>make your knob however you like.
+<ul>
+<li>you can generally as a rule of thumb just make sure you keep the cursor in the center of the object or knob that you’re designing.</li>
+</ul></li>
+</ul></li>
+<li>Setup Animation Settings for the Knob
+<ul>
+<li>Go to your Time-line and Frame <code>0</code> within</li>
+<li>Set this as your first frame or press <code>S</code></li>
+<li>Go to frame <code>64</code></li>
+<li>Set this as your last frame or press <code>E</code></li>
+<li>Note that we are only looking to animate the Z-axis of our knob.</li>
+<li>Go back to your main Design or Default view</li>
+<li>Next we’ll create key-frames @<code>0</code>, <code>32</code> and <code>64</code> containing rotations: -30, -180 and -330 or as noted below, -33, -180 and -327. It can be a bit confusing to use those actual values so we’re going to want to set the initial rotation to -30 deg and then apply our keyframes to the z-rotation. Once you set the initial rotation angle you want to <strong>Apply Tranformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
+<ul>
+<li>we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 33 used here, targeting 32 frames with the center piece.</li>
+<li>Go to Frame 0 and change Z rotation to -33 degrees. Press I and select Rotation.</li>
+<li>Go to Frame 32 and change Z Rotation to -180. Press I and select Rotation.</li>
+<li>Go to Frame 64 and change Z Rotation to -327 (360 - 33). Press I and select Rotation.</li>
+</ul></li>
+<li>Return back to the Time-line (or animation) view (‘Dopesheet’). Expand the ‘action’ pertaining to your knob which we just set.</li>
+<li>If you would like, you can select and delete <code>X Euler Rotation</code> and <code>Y Euler Rotation</code> leaving <code>Z Euler Rotation</code>.</li>
+<li>Within the ‘Dopesheet’ view, select <code>Z Euler Rotation</code> by clicking on it and press <code>T</code> and select <code>Linear</code> interpolation.</li>
+</ul></li>
+</ul>
+<figure>
+<img src="doc/004.jpg" alt="blender screen 1" /><figcaption>blender screen 1</figcaption>
+</figure>
+<h1 id="scripts-overview">Scripts Overview</h1>
+<p>There are two basic scripts – though duplicates due to the whole x86 vs x64 thing.</p>
+<p>They’re designed so that you can drag-drop your blender file into them in windows.</p>
+<ol>
+<li><code>do-blender-render-*.cmd</code> Uses blender and render each frame of our mesh-animation.</li>
+<li><code>do_magick_*-64.cmd</code> Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).</li>
+</ol>
+<p>Vertical tile image size widths generated are 96, 72, 64, 48, 40, 36, 32, 24 and 20. The height depends on the number of images used to create the tile. Look toward the bottom of <code>ren.sh</code> to add whatever dimension you like.</p>
+<p>Its important to note the names of the scripts because I’m using a x64 machine and its possible that we have a Win32 user reading this so…</p>
+<p>A SCRIPT FOR RENDERING FROM BLENDER COMMAND-LINE</p>
+<ul>
+<li>scripts with ‘native’ appended to the end of the file-name will call
+<ul>
+<li>on 64-bit platform, will call <code>c:\program files\blender\blender</code></li>
+<li>on 32-bit platform, will call <code>c:\program files\blender\blender</code></li>
+</ul></li>
+<li>scripts with x86_64 appended to the end of the file-name will call
+<ul>
+<li><code>c:\program files (x86)\blender\blender</code></li>
+</ul></li>
+<li>Mac or ’nix users are going to have to write their own shell script to render based on whatever windows command file.</li>
+</ul>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/usr/bin/sh</span>
+<span class="ot">BLEND=$1</span>
+<span class="ot">OFILE=</span>
+<span class="kw">blender</span> -b <span class="st">&quot;</span><span class="ot">${BLEND}</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="ot">${OFILE}</span><span class="st">&quot;</span> -a</code></pre>
+<h1 id="tips">TIPS</h1>
+<h2 id="some-texturing-notes">SOME TEXTURING NOTES</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=nattlrdnEPM">Blender Quick Tip - Transparent Shadow in Final Render - YouTube</a></li>
+<li><a href="https://www.blender.org/manual/render/cycles/nodes/textures.html">Texture Nodes — Blender Reference Manual</a></li>
+</ul>
+<h2 id="some-math">SOME MATH</h2>
+<p>Say you want to round a 7 (or other) pointed knob.</p>
+<blockquote>
+<p>You always want an odd number of nodal (or rotational) points.<br />NB: otherwise, there is not going to be a center-point (point straight up for example)</p>
+</blockquote>
+<p>Grab your calculator and prep some calculations…</p>
+<pre><code># Basic (first) angle
+
+360 / 7 = ...
+
+So...
+
+[1] = 0
+[2] = 51.428571428571428571428571428571
+[3] = 102.85714285714285714285714285714
+[4] = 154.28571428571428571428571428571
+[5] = 205.71428571428571428571428571428
+[6] = 257.14285714285714285714285714286
+[7] = 308.57142857142857142857142857143</code></pre>
+<p>So as shown in the following figure, when ‘meshing’, we would simply create the first element in the perceived (y-axis) top, with the mesh’s zero point set to the scene’s 0,0,0 vector at which point we can just duplicate and rotate per interval above. A plug-in would be nice for this, but I don’t think a knob factory is really in order as you can just save your results for repeating once done.</p>
+<p>Once the mesh is completed, we would apply a boolean difference (might want to recalculate normals first on the above created mesh).</p>
+<figure>
+<img src="doc/knob_corners.png" alt="Bitwise Mask" /><figcaption>Bitwise Mask</figcaption>
+</figure>
+<h1 id="scripts">Scripts</h1>
+<h2 id="about-them">About them</h2>
+<p>There are a few scripts in here and I hadn’t messed with em in a while.<br />I’m a windows user who is a fan of ’nix or FSF’s GPL, not to mention cross-platform man-tality which for me—equates to msys2 bash scripting.</p>
+<p>There are a few useful windows commands, but for the most part they just call the bash scripts.</p>
+<p>These scripts are designed on a windows 7 machine, though with little intervention, you should be able to make a few tweaks to how this is used to use it as simply on your machine.</p>
+<p>The goal of the scripts was to make them drag-drop capable as there are two scripts.</p>
+<h2 id="image-magick-under-msys2">Image-Magick under msys2</h2>
+<p>You’re going to want to kick me reading this knowing full well that image-magick is broke in several distributions; Just skip below and download/install a working version silly. I’m not a ’nix user, so you’re going to have to consult your package-management (or managers) to figure out what versions are going to work for you. Chances are, if you’re on linux (or mac) the package managers aren’t lazy and patched the issues or filed a bug report AND of course one would hope that those reports were acted upon by Image-Magick builders/devs. Its not your package manager’s responsibilty to fix issues like this—and they bring you everyhing you use, so be respectful ;)</p>
+<p>For a windows user on msys2 to manually install your msys2 imagemagick package, load up msys2 bash and</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># assuming the package is in your downloads directory...</span>
+<span class="kw">cd</span> /c/users/[your-username-on-your-machine]/downloads
+
+<span class="kw">pacman</span> -U [your-package-name].pkg.tar.xz
+
+<span class="co"># if you only downloaded one package and its in your downloads directory...</span>
+<span class="co"># pacman -U *.pkg.tar.xz</span>
+
+<span class="co"># or even</span>
+<span class="co"># pacman -U *.xz</span>
+
+<span class="co"># you get the idea</span></code></pre>
+<p>and follow along the ^provided instruction^ once running pacman’s update command.</p>
+<h2 id="how-i-got-the-following-list-of-files">How I got the following list of files…</h2>
+<p>You’ll notice the following lists. If you’re ever looking to find a (further) downstream package for msys2, you might want to do as I did and download the appropriate FILES page so you can search for what you’re looking for much faster using something like sublime-text and regular expressions.</p>
+<p>In this particular case, I knew I was looking for <code>imagemagick</code></p>
+<ul>
+<li>right-click, download the single html file and load in your regex-search capable text-editor.
+<ul>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/" class="uri">https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/" class="uri">https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/</a></li>
+</ul></li>
+</ul>
+<p>Once I found the package-uri, it was simple to convert it into a regex query that would allow me to find each release.</p>
+<p>for example: <code>href=&quot;https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-[^][&quot;]*</code> or for i686, <code>href=&quot;https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-x86_64-imagemagick-[^][&quot;]*</code></p>
+<h2 id="working-x86-image-magick-for-msys2">Working x86 Image Magick for msys2</h2>
+<p>These are on the source-forge files section of msys2… I’m sure one of these will do—just forgot which one. I’ve got money on <a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-6.9.3.7-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-6.9.3.7-1-any.pkg.tar.xz</a> one of the v6.x ;)</p>
+<p>Emboldened is the working version.</p>
+<p><em>guessing you don’t really care about the sig files…</em><br /><em>If you want to download one, just copy/paste one of the following links and append <code>.sig</code></em><br /><em>note: you’re not going to want to r-click/save-as these as they’re redirect pages.</em></p>
+<ul>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.4.4-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.4.4-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.3.5-2-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.3.5-2-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.3.5-2-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.3.5-2-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.3.1-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.3.1-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.1.10-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.1.10-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.1.9-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.1.9-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-7.0.1.8-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-7.0.1.8-1-any.pkg.tar.xz</a></li>
+<li><strong><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-6.9.3.7-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-6.9.3.7-1-any.pkg.tar.xz</a></strong></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-6.9.2.10-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-6.9.2.10-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-6.9.2.0-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-6.9.2.0-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/i686/mingw-w64-i686-imagemagick-6.9.1.8-1-any.pkg.tar.xz/download">mingw-w64-i686-imagemagick-6.9.1.8-1-any.pkg.tar.xz</a></li>
+</ul>
+<h2 id="working-x64-image-magick-for-msys2">Working x64 Image Magick for msys2</h2>
+<p><em>guessing you don’t really care about the sig files…</em><br /><em>If you want to download one, just copy/paste one of the following links and append <code>.sig</code></em><br /><em>note: you’re not going to want to r-click/save-as these as they’re redirect pages.</em></p>
+<ul>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.5.0-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.5.0-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.4.4-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.4.4-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.3.5-2-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.3.5-2-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.3.1-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.3.1-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.1.10-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.1.10-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.1.9-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.1.9-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-7.0.1.8-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-7.0.1.8-1-any.pkg.tar.xz</a></li>
+<li><strong><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.3.7-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.3.7-1-any.pkg.tar.xz</a></strong></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.2.10-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.2.10-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.2.0-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.2.0-1-any.pkg.tar.xz</a></li>
+<li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz</a></li>
+</ul>
+</body>
+</html><style>
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
