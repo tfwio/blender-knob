@@ -1,4 +1,4 @@
-<!--Author:tfw
+<!-- Author:tfw
 Author-meta:tfw
 Title:Blender Knob
 Subtitle: and Post-Processing with ImageMagick
@@ -12,12 +12,13 @@ dh:8in
 dw:5in
 top:0.75in
 bottom:0.75in
-lr:0.35in-->
+lr:0.35in -->
 
 > This is a basic outline and demonstration of the things that I've learned while attempting to do this with blender and ImageMagick.
 > 
 > This (I don't beleive) isn't really going to be one of those copy/paste type of things.  You're going to need to become if not allready familiar with [Blender](http://blender.org) and perhaps (of course) have use for interest in knobs in IPLUG or something like.  The blender files use blender's "Cycles" renderer and a minimal amount of compositing which if you're new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find... The results are well worth it.
 > 
+> Not every technique (as found in the blender files) 
 > There may well be errors in some of the process I jotted down here (a year or so back).  This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!
 
 ![Example 33'rd frame; frame 32 of 64]
@@ -61,29 +62,30 @@ Scripts and the blender process(s) are known to be working with ...
     - Note: You are going to want to customize the lighting settings when adjusting your knob's materials and finalizing (most likely).
 - Set up your rendering settings.
     - Press the camera button
-    - Goto the `Film` category and check the "Transparent" check-box so that we can have a transparent background.
+    - Goto the `Film` category and check the "Transparent" check-box so that we can have a transparent background.  
+      ![Transparency-Setting]
     - Switch the renderer to cycles for later applying to your (knob's) materials.
 - Design your knob
     - press 2 to go the second layer.
     - add plane (you can enlarge it now or later to fill the camera view).
     - press 1 to return to the first layer.
     - make your knob however you like.
-        - you can generally as a rule of thumb just make sure you keep the cursor in the center of the object or knob that you're designing.
+          - you can generally as a rule of thumb just make sure you keep the cursor in the center of the object or knob that you're designing.
 - Setup Animation Settings for the Knob
     - Go to your Time-line and Frame `0` within
     - Set this as your first frame or press `S`
     - Go to frame `64`
     - Set this as your last frame or press `E`
-    - Note that we are only looking to animate the Z-axis of our knob.
+          - NOTE: we are only looking to animate the Z-axis of our knob.
     - Go back to your main Design or Default view
-    - Next we'll create key-frames @`0`, `32` and `64`  
+    - Next we'll create key-frames @0, 16 and 33 containing rotations: -30, -180 and -330, but we're starting at -30 degrees (zero'd) so that translates to 0, 150 and 300 deg.  
       we're going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.
       - Rotate on the z-axis -30 deg and **Apply Tranformation** pressing `Ctrl+A` within the mesh view.
-        - *NOTE that the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select `insert single keyframe` — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.*
-        - we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 33 used here, targeting 32 frames with the center piece.
-        - Go to Frame  0 and change Z rotation to -33 degrees. Press I and select Rotation.
-        - Go to Frame 32 and change Z Rotation to -180. Press I and select Rotation.
-        - Go to Frame 64 and change Z Rotation to -327 (360 - 33). Press I and select Rotation.
+          - *NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select `insert single keyframe` — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.*
+          - we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 65 or 33 (counting the 0th) used here, this way our center frame points up at 90 deg.
+          - Go to Frame  0 and change Z rotation to -0 degrees. Press `I` and select Rotation.
+          - Go to Frame 32 and change Z Rotation to -150. Press `I` and select Rotation.
+          - Go to Frame 64 and change Z Rotation to -300. Press `I` and select Rotation.
     - Return back to the Time-line (or animation) view ('Dopesheet').  Expand the 'action' pertaining to your knob which we just set.
     - If you would like, you can select and delete `X Euler Rotation` and `Y Euler Rotation` leaving `Z Euler Rotation`.
     - Within the 'Dopesheet' view, select `Z Euler Rotation` by clicking on it and press `T` and select `Linear` interpolation.
@@ -92,21 +94,9 @@ Scripts and the blender process(s) are known to be working with ...
 
 # Scripts Overview
 
-There are two basic scripts – though duplicates due to the whole x86 vs x64 thing.
-
 They're designed so that you can drag-drop your blender file into them in windows.
 
-1. `do-blender-render-*.cmd` Uses blender and render each frame of our mesh-animation.
-2. `do_magick_*-64.cmd` Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).
-
-Vertical tile image size widths generated are 96, 72, 64, 48, 40, 36, 32, 24 and 20.
-The height depends on the number of images used to create the tile.
-Look toward the bottom of `ren.sh` to add whatever dimension you like.
-
-Its important to note the names of the scripts because I'm using a x64 machine and its possible that we have a Win32 user reading this so...
-
-A SCRIPT FOR RENDERING FROM BLENDER COMMAND-LINE
-
+- There are two basic scripts – though duplicates due to the whole x86 vs x64 thing.  Its important to note the names of the scripts because I'm using a x64 machine and its possible that we have a Win32 user reading this so...
 - scripts with 'native' appended to the end of the file-name will call
     - on 64-bit platform, will call `c:\program files\blender\blender`
     - on 32-bit platform, will call `c:\program files\blender\blender`
@@ -114,13 +104,14 @@ A SCRIPT FOR RENDERING FROM BLENDER COMMAND-LINE
     -  `c:\program files (x86)\blender\blender`
 - Mac or 'nix users are going to have to write their own shell script to render based on whatever windows command file.
 
-```bash
-#!/usr/bin/sh
-BLEND=$1
-OFILE=
-blender -b "${BLEND}" -o "${OFILE}" -a
+**scripts**
 
-```
+1. `do-blender-render-*.cmd` Uses blender and render each frame of our mesh-animation.
+2. `do_magick_*-64.cmd` Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).  
+Vertical tile image size widths generated are **96**, **72**, **64**, **48**, **40**, **36**, **32**, **24** and **20**.  Heighth (automated) pending an input parameter depends on the number of projected image-tiles used.
+Look toward the bottom of `ren.sh` to add whatever dimension you like.
+    - Modify/clone, read and/or change the above to tailor it to whatever your desired frame-count.
+
 
 # TIPS
 
@@ -162,19 +153,6 @@ So as shown in the following figure, when 'meshing', we would simply create the 
 Once the mesh is completed, we would apply a boolean difference (might want to recalculate normals first on the above created mesh).
 
 ![Bitwise Mask]
-
-# Scripts
-
-## About them
-
-There are a few scripts in here and I hadn't messed with em in a while.  
-I'm a windows user who is a fan of 'nix or FSF's GPL, not to mention cross-platform man-tality which for me—equates to msys2 bash scripting.
-
-There are a few useful windows commands, but for the most part they just call the bash scripts.
-
-These scripts are designed on a windows 7 machine, though with little intervention, you should be able to make a few tweaks to how this is used to use it as simply on your machine.
-
-The goal of the scripts was to make them drag-drop capable as there are two scripts.
 
 ## Image-Magick under msys2
 
@@ -281,4 +259,5 @@ Emboldened is the working version.
 [Another Example (flipped 90deg for readability)]: doc/002.png
 [Blender Version]: doc/003.jpg
 [blender screen 1]: doc/004.jpg
+[Transparency-Setting]: doc/005.jpg
 [Bitwise Mask]: doc/knob_corners.png

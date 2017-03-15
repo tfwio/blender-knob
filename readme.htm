@@ -32,9 +32,6 @@ body {
 <li><a href="#tips">TIPS</a><ul>
 <li><a href="#some-texturing-notes">SOME TEXTURING NOTES</a></li>
 <li><a href="#some-math">SOME MATH</a></li>
-</ul></li>
-<li><a href="#scripts">Scripts</a><ul>
-<li><a href="#about-them">About them</a></li>
 <li><a href="#image-magick-under-msys2">Image-Magick under msys2</a></li>
 <li><a href="#how-i-got-the-following-list-of-files">How I got the following list of files…</a></li>
 <li><a href="#working-x86-image-magick-for-msys2">Working x86 Image Magick for msys2</a></li>
@@ -45,7 +42,7 @@ body {
 <blockquote>
 <p>This is a basic outline and demonstration of the things that I’ve learned while attempting to do this with blender and ImageMagick.</p>
 <p>This (I don’t beleive) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
-<p>There may well be errors in some of the process I jotted down here (a year or so back). This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
+<p>Not every technique (as found in the blender files) There may well be errors in some of the process I jotted down here (a year or so back). This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
 </blockquote>
 <figure>
 <img src="doc/001.jpg" alt="Example 33’rd frame; frame 32 of 64" /><figcaption>Example 33’rd frame; frame 32 of 64</figcaption>
@@ -113,7 +110,7 @@ body {
 <li>Set up your rendering settings.
 <ul>
 <li>Press the camera button</li>
-<li>Goto the <code>Film</code> category and check the “Transparent” check-box so that we can have a transparent background.</li>
+<li>Goto the <code>Film</code> category and check the “Transparent” check-box so that we can have a transparent background.<br /> <img src="doc/005.jpg" alt="Transparency-Setting" /></li>
 <li>Switch the renderer to cycles for later applying to your (knob’s) materials.</li>
 </ul></li>
 <li>Design your knob
@@ -131,17 +128,19 @@ body {
 <li>Go to your Time-line and Frame <code>0</code> within</li>
 <li>Set this as your first frame or press <code>S</code></li>
 <li>Go to frame <code>64</code></li>
-<li>Set this as your last frame or press <code>E</code></li>
-<li>Note that we are only looking to animate the Z-axis of our knob.</li>
+<li>Set this as your last frame or press <code>E</code>
+<ul>
+<li>NOTE: we are only looking to animate the Z-axis of our knob.</li>
+</ul></li>
 <li>Go back to your main Design or Default view</li>
-<li>Next we’ll create key-frames @<code>0</code>, <code>32</code> and <code>64</code><br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.</li>
+<li>Next we’ll create key-frames @0, 16 and 33 containing rotations: -30, -180 and -330, but we’re starting at -30 degrees (zero’d) so that translates to 0, 150 and 300 deg.<br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.</li>
 <li>Rotate on the z-axis -30 deg and <strong>Apply Tranformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
 <ul>
-<li><em>NOTE that the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select <code>insert single keyframe</code> — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.</em></li>
-<li>we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 33 used here, targeting 32 frames with the center piece.</li>
-<li>Go to Frame 0 and change Z rotation to -33 degrees. Press I and select Rotation.</li>
-<li>Go to Frame 32 and change Z Rotation to -180. Press I and select Rotation.</li>
-<li>Go to Frame 64 and change Z Rotation to -327 (360 - 33). Press I and select Rotation.</li>
+<li><em>NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select <code>insert single keyframe</code> — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.</em></li>
+<li>we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 65 or 33 (counting the 0th) used here, this way our center frame points up at 90 deg.</li>
+<li>Go to Frame 0 and change Z rotation to -0 degrees. Press <code>I</code> and select Rotation.</li>
+<li>Go to Frame 32 and change Z Rotation to -150. Press <code>I</code> and select Rotation.</li>
+<li>Go to Frame 64 and change Z Rotation to -300. Press <code>I</code> and select Rotation.</li>
 </ul></li>
 <li>Return back to the Time-line (or animation) view (‘Dopesheet’). Expand the ‘action’ pertaining to your knob which we just set.</li>
 <li>If you would like, you can select and delete <code>X Euler Rotation</code> and <code>Y Euler Rotation</code> leaving <code>Z Euler Rotation</code>.</li>
@@ -152,16 +151,9 @@ body {
 <img src="doc/004.jpg" alt="blender screen 1" /><figcaption>blender screen 1</figcaption>
 </figure>
 <h1 id="scripts-overview">Scripts Overview</h1>
-<p>There are two basic scripts – though duplicates due to the whole x86 vs x64 thing.</p>
 <p>They’re designed so that you can drag-drop your blender file into them in windows.</p>
-<ol>
-<li><code>do-blender-render-*.cmd</code> Uses blender and render each frame of our mesh-animation.</li>
-<li><code>do_magick_*-64.cmd</code> Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).</li>
-</ol>
-<p>Vertical tile image size widths generated are 96, 72, 64, 48, 40, 36, 32, 24 and 20. The height depends on the number of images used to create the tile. Look toward the bottom of <code>ren.sh</code> to add whatever dimension you like.</p>
-<p>Its important to note the names of the scripts because I’m using a x64 machine and its possible that we have a Win32 user reading this so…</p>
-<p>A SCRIPT FOR RENDERING FROM BLENDER COMMAND-LINE</p>
 <ul>
+<li>There are two basic scripts – though duplicates due to the whole x86 vs x64 thing. Its important to note the names of the scripts because I’m using a x64 machine and its possible that we have a Win32 user reading this so…</li>
 <li>scripts with ‘native’ appended to the end of the file-name will call
 <ul>
 <li>on 64-bit platform, will call <code>c:\program files\blender\blender</code></li>
@@ -173,10 +165,14 @@ body {
 </ul></li>
 <li>Mac or ’nix users are going to have to write their own shell script to render based on whatever windows command file.</li>
 </ul>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/usr/bin/sh</span>
-<span class="ot">BLEND=$1</span>
-<span class="ot">OFILE=</span>
-<span class="kw">blender</span> -b <span class="st">&quot;</span><span class="ot">${BLEND}</span><span class="st">&quot;</span> -o <span class="st">&quot;</span><span class="ot">${OFILE}</span><span class="st">&quot;</span> -a</code></pre>
+<p><strong>scripts</strong></p>
+<ol>
+<li><code>do-blender-render-*.cmd</code> Uses blender and render each frame of our mesh-animation.</li>
+<li><code>do_magick_*-64.cmd</code> Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).<br />Vertical tile image size widths generated are <strong>96</strong>, <strong>72</strong>, <strong>64</strong>, <strong>48</strong>, <strong>40</strong>, <strong>36</strong>, <strong>32</strong>, <strong>24</strong> and <strong>20</strong>. Heighth (automated) pending an input parameter depends on the number of projected image-tiles used. Look toward the bottom of <code>ren.sh</code> to add whatever dimension you like.
+<ul>
+<li>Modify/clone, read and/or change the above to tailor it to whatever your desired frame-count.</li>
+</ul></li>
+</ol>
 <h1 id="tips">TIPS</h1>
 <h2 id="some-texturing-notes">SOME TEXTURING NOTES</h2>
 <ul>
@@ -207,12 +203,6 @@ So...
 <figure>
 <img src="doc/knob_corners.png" alt="Bitwise Mask" /><figcaption>Bitwise Mask</figcaption>
 </figure>
-<h1 id="scripts">Scripts</h1>
-<h2 id="about-them">About them</h2>
-<p>There are a few scripts in here and I hadn’t messed with em in a while.<br />I’m a windows user who is a fan of ’nix or FSF’s GPL, not to mention cross-platform man-tality which for me—equates to msys2 bash scripting.</p>
-<p>There are a few useful windows commands, but for the most part they just call the bash scripts.</p>
-<p>These scripts are designed on a windows 7 machine, though with little intervention, you should be able to make a few tweaks to how this is used to use it as simply on your machine.</p>
-<p>The goal of the scripts was to make them drag-drop capable as there are two scripts.</p>
 <h2 id="image-magick-under-msys2">Image-Magick under msys2</h2>
 <p>You’re going to want to kick me reading this knowing full well that image-magick is broke in several distributions; Just skip below and download/install a working version silly. I’m not a ’nix user, so you’re going to have to consult your package-management (or managers) to figure out what versions are going to work for you. Chances are, if you’re on linux (or mac) the package managers aren’t lazy and patched the issues or filed a bug report AND of course one would hope that those reports were acted upon by Image-Magick builders/devs. Its not your package manager’s responsibilty to fix issues like this—and they bring you everyhing you use, so be respectful ;)</p>
 <p>For a windows user on msys2 to manually install your msys2 imagemagick package, load up msys2 bash and</p>
