@@ -14,14 +14,11 @@ top:0.75in
 bottom:0.75in
 lr:0.35in-->
 
-> Rendering a knob in blender is simply something that I have thought about doing for VST instruments and effects for quite some time and I'm sure I'm not the only one.  Obviously I'm not the only dude out there with this thought given the various plug-ins which have gotten this sort of attention regardless of the tools used.
+> This is a basic outline and demonstration of the things that I've learned while attempting to do this with blender and ImageMagick.
 > 
-> This is a basic outline of the things that I've learned while attempting to do this with blender and ImageMagick.
-> 
-> Like a few of my other drafts/posts, they may be a little drafty but I hope they might make you happy anyways ;)
 > This (I don't beleive) isn't really going to be one of those copy/paste type of things.  You're going to need to become if not allready familiar with [Blender](http://blender.org) and perhaps (of course) have use for interest in knobs in IPLUG or something like.  The blender files use blender's "Cycles" renderer and a minimal amount of compositing which if you're new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find... The results are well worth it.
 > 
-> There may well be errors in some of the process I jotted down here (a while back).  This is just an initial dump of my notes with a little editing and I'm glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!
+> There may well be errors in some of the process I jotted down here (a year or so back).  This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!
 
 ![Example 33'rd frame; frame 32 of 64]
 
@@ -79,7 +76,10 @@ Scripts and the blender process(s) are known to be working with ...
     - Set this as your last frame or press `E`
     - Note that we are only looking to animate the Z-axis of our knob.
     - Go back to your main Design or Default view
-    - Next we'll create key-frames @`0`, `32` and `64` containing rotations: -30, -180 and -330 or as noted below, -33, -180 and -327.  It can be a bit confusing to use those actual values so we're going to want to set the initial rotation to -30 deg and then apply our keyframes to the z-rotation.  Once you set the initial rotation angle you want to **Apply Tranformation** pressing `Ctrl+A` within the mesh view.
+    - Next we'll create key-frames @`0`, `32` and `64`  
+      we're going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.
+      - Rotate on the z-axis -30 deg and **Apply Tranformation** pressing `Ctrl+A` within the mesh view.
+        - *NOTE that the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select `insert single keyframe` — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.*
         - we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 33 used here, targeting 32 frames with the center piece.
         - Go to Frame  0 and change Z rotation to -33 degrees. Press I and select Rotation.
         - Go to Frame 32 and change Z Rotation to -180. Press I and select Rotation.

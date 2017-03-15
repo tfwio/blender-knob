@@ -43,10 +43,9 @@ body {
 </ul>
 </nav>
 <blockquote>
-<p>Rendering a knob in blender is simply something that I have thought about doing for VST instruments and effects for quite some time and I’m sure I’m not the only one. Obviously I’m not the only dude out there with this thought given the various plug-ins which have gotten this sort of attention regardless of the tools used.</p>
-<p>This is a basic outline of the things that I’ve learned while attempting to do this with blender and ImageMagick.</p>
-<p>Like a few of my other drafts/posts, they may be a little drafty but I hope they might make you happy anyways ;) This (I don’t beleive) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
-<p>There may well be errors in some of the process I jotted down here (a while back). This is just an initial dump of my notes with a little editing and I’m glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
+<p>This is a basic outline and demonstration of the things that I’ve learned while attempting to do this with blender and ImageMagick.</p>
+<p>This (I don’t beleive) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
+<p>There may well be errors in some of the process I jotted down here (a year or so back). This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
 </blockquote>
 <figure>
 <img src="doc/001.jpg" alt="Example 33’rd frame; frame 32 of 64" /><figcaption>Example 33’rd frame; frame 32 of 64</figcaption>
@@ -135,8 +134,10 @@ body {
 <li>Set this as your last frame or press <code>E</code></li>
 <li>Note that we are only looking to animate the Z-axis of our knob.</li>
 <li>Go back to your main Design or Default view</li>
-<li>Next we’ll create key-frames @<code>0</code>, <code>32</code> and <code>64</code> containing rotations: -30, -180 and -330 or as noted below, -33, -180 and -327. It can be a bit confusing to use those actual values so we’re going to want to set the initial rotation to -30 deg and then apply our keyframes to the z-rotation. Once you set the initial rotation angle you want to <strong>Apply Tranformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
+<li>Next we’ll create key-frames @<code>0</code>, <code>32</code> and <code>64</code><br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.</li>
+<li>Rotate on the z-axis -30 deg and <strong>Apply Tranformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
 <ul>
+<li><em>NOTE that the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select <code>insert single keyframe</code> — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.</em></li>
 <li>we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 33 used here, targeting 32 frames with the center piece.</li>
 <li>Go to Frame 0 and change Z rotation to -33 degrees. Press I and select Rotation.</li>
 <li>Go to Frame 32 and change Z Rotation to -180. Press I and select Rotation.</li>
