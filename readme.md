@@ -1,4 +1,4 @@
-Author:tfw
+<!--Author:tfw
 Author-meta:tfw
 Title:Blender Knob
 Subtitle: and Post-Processing with ImageMagick
@@ -12,7 +12,7 @@ dh:8in
 dw:5in
 top:0.75in
 bottom:0.75in
-lr:0.35in
+lr:0.35in-->
 
 > Rendering a knob in blender is simply something that I have thought about doing for VST instruments and effects for quite some time and I'm sure I'm not the only one.  Obviously I'm not the only dude out there with this thought given the various plug-ins which have gotten this sort of attention regardless of the tools used.
 > 
