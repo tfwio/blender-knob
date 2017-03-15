@@ -279,6 +279,6 @@ Emboldened is the working version.
 
 [Example 33'rd frame; frame 32 of 64]: doc/001.jpg
 [Another Example (flipped 90deg for readability)]: doc/002.png
-[Blender Version]: 003.jpg
-[blender screen 1]: 004.jpg
+[Blender Version]: doc/003.jpg
+[blender screen 1]: doc/004.jpg
 [Bitwise Mask]: doc/knob_corners.png
