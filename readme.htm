@@ -42,15 +42,13 @@ body {
 </nav>
 <blockquote>
 <p>This is a basic outline and demonstration of the things that I’ve learned while attempting to do this with blender and ImageMagick.</p>
-<p>This (I don’t beleive) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
+<p>This (I don’t believe) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
 <p>Not every technique (as found in the blender files) is likely documented as there may well be errors in some of the process I jotted down here (a year or so back). This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
 </blockquote>
 <figure>
 <img src="doc/001.jpg" alt="Example 33’rd frame; frame 32 of 64" /><figcaption>Example 33’rd frame; frame 32 of 64</figcaption>
 </figure>
-<figure>
-<img src="doc/002.png" alt="Another Example (flipped 90deg for readability)" /><figcaption>Another Example (flipped 90deg for readability)</figcaption>
-</figure>
+<p>[Another Example (flipped 90° for readability)]</p>
 <h2 id="things-i-might-forget-again-blender">THINGS I MIGHT FORGET AGAIN (Blender)</h2>
 <p><strong>COPY STUFF FROM AN OBJECT TO MULTIPLE…</strong></p>
 <ul>
@@ -135,10 +133,10 @@ body {
 <li>NOTE: we are only looking to animate the Z-axis of our knob.</li>
 </ul></li>
 <li>Go back to your main Design or Default view</li>
-<li>Next we’ll create key-frames <code>@0</code>, <code>32</code> and <code>64</code> containing rotations: <code>-30°</code>, <code>-180°</code> and <code>-330°</code>.<br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.<br /> note: <em>the <code>do-blend*</code> script is set to handle 64 frames (though actually 65 are rendered)</em></li>
-<li>Rotate on the z-axis -30 deg and <strong>Apply Tranformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
+<li>Next we’ll create key-frames <code>@0</code>, <code>32</code> and <code>64</code> containing rotations: <code>-30°</code>, <code>-180°</code> and <code>-330°</code>.<br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our key-frames to the z-rotation.<br /> note: <em>the <code>do-blend*</code> script is set to handle 64 frames (though actually 65 are rendered)</em></li>
+<li>Rotate on the z-axis -30 deg and <strong>Apply Transformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
 <ul>
-<li><em>NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select <code>insert single keyframe</code> — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.</em></li>
+<li><em>NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select <code>insert single key-frame</code> — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.</em></li>
 <li>we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 65 or 33 (counting the 0th) used here, this way our center frame points up at 90 deg.</li>
 <li>Go to Frame 0 and change Z rotation to -0 degrees. Press <code>I</code> and select Rotation.</li>
 <li>Go to Frame 32 and change Z Rotation to -150. Press <code>I</code> and select Rotation.</li>
@@ -206,7 +204,7 @@ So...
 <img src="doc/knob_corners.png" alt="Bitwise Mask" /><figcaption>Bitwise Mask</figcaption>
 </figure>
 <h2 id="image-magick-under-msys2">Image-Magick under msys2</h2>
-<p>You’re going to want to kick me reading this knowing full well that image-magick is broke in several distributions; Just skip below and download/install a working version silly. I’m not a ’nix user, so you’re going to have to consult your package-management (or managers) to figure out what versions are going to work for you. Chances are, if you’re on linux (or mac) the package managers aren’t lazy and patched the issues or filed a bug report AND of course one would hope that those reports were acted upon by Image-Magick builders/devs. Its not your package manager’s responsibilty to fix issues like this—and they bring you everyhing you use, so be respectful ;)</p>
+<p>You’re going to want to kick me reading this knowing full well that image-magick is broke in several distributions; Just skip below and download/install a working version silly. I’m not a ’nix user, so you’re going to have to consult your package-management (or managers) to figure out what versions are going to work for you. Chances are, if you’re on linux (or mac) the package managers aren’t lazy and patched the issues or filed a bug report AND of course one would hope that those reports were acted upon by Image-Magick builders/devs. Its not your package manager’s responsibility to fix issues like this—and they bring you everything you use, so be respectful ;)</p>
 <p>For a windows user on msys2 to manually install your msys2 imagemagick package, load up msys2 bash and</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># assuming the package is in your downloads directory...</span>
 <span class="kw">cd</span> /c/users/[your-username-on-your-machine]/downloads
@@ -266,40 +264,14 @@ So...
 <li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz</a></li>
 </ul>
 <h1 id="a-helpful-blender-python-script">A Helpful Blender-Python Script</h1>
-<p>One script was particularly helpful: <code>space_view3d_move_origin.py</code>.<br />I’d placed it into the <code>./blender-mods</code> directory.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="co">&#39;&#39;&#39;</span>
-<span class="co">BEGIN GPL LICENSE BLOCK</span>
-<span class="co">This program is free software; you can redistribute it and/or</span>
-<span class="co">modify it under the terms of the GNU General Public License</span>
-<span class="co">as published by the Free Software Foundation; either version 2</span>
-<span class="co">of the License, or (at your option) any later version.</span>
-<span class="co">This program is distributed in the hope that it will be useful,</span>
-<span class="co">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="co">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the</span>
-<span class="co">GNU General Public License for more details.</span>
-<span class="co">You should have received a copy of the GNU General Public License</span>
-<span class="co">along with this program; if not, write to the Free Software Foundation,</span>
-<span class="co">Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.</span>
-<span class="co">END GPL LICENCE BLOCK</span>
-<span class="co">&#39;&#39;&#39;</span>
-
-bl_info = {
-    <span class="st">&#39;name&#39;</span>: <span class="st">&#39;Move origin to selected&#39;</span>,
-    <span class="co">&#39;author&#39;</span>: <span class="st">&#39;&#39;</span>,
-    <span class="co">&#39;version&#39;</span>: (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>),
-    <span class="co">&#39;blender&#39;</span>: (<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">7</span>),
-    <span class="co">&#39;location&#39;</span>: <span class="st">&#39;3d view &gt; space bar &gt; Origin Move to Selected&#39;</span>,
-    <span class="co">&#39;description&#39;</span>: <span class="st">&#39;in edit mode, sets object origin to the median of selected verts/edges/faces&#39;</span>,
-    <span class="co">&#39;wiki_url&#39;</span>: <span class="st">&#39;&#39;</span>,
-    <span class="co">&#39;tracker_url&#39;</span>: <span class="st">&#39;&#39;</span>,
-    <span class="co">&#39;category&#39;</span>: <span class="st">&#39;3D View&#39;</span>}</code></pre>
+<p>One script was particularly helpful: <a href="blender-mods/space_view3d_move_origin.py">space_view3d_move_origin.py</a>.<br />I’d placed it into the <code>./blender-mods</code> directory.</p>
 <ul>
 <li>I’m not sure where I got this script. Maybe from…</li>
 <li>See: <a href="https://gist.github.com/anonymous/5844378" class="uri">https://gist.github.com/anonymous/5844378</a></li>
 <li>And: <a href="https://gist.github.com/zeffii/5844379" class="uri">https://gist.github.com/zeffii/5844379</a> &lt; for newer revisions</li>
 <li>(I hadn’t tested these)</li>
 </ul>
-<p>When you’re in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the 3D-cursor to set the center-point of your mesh. This is particularly useful when you have edited a knob or whatever and you need to manually set its <strong>rotation-center</strong>.<br /><em>this was handy when setting up the 7-sided boolean cylendars (as in some exaple in here)</em></p>
+<p>When you’re in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the 3D-cursor to set the center-point of your mesh. This is particularly useful when you have edited a knob or whatever and you need to manually set its <strong>rotation-center</strong>.<br /><em>this was handy when setting up the 7-sided boolean cylinders (as in some example in here)</em></p>
 <p>In case you need some help <strong>Installing and configuring the python script</strong></p>
 <ol>
 <li>Click your Window-Selector Icon in the 3D-view</li>
@@ -322,8 +294,6 @@ bl_info = {
 <li><strong>SAVE YOUR SETTINGS AGAIN</strong> by clicking the <strong>Save User Settings</strong> button</li>
 </ol>
 <p><strong><em>Note that <code>Ctrl+Alt+O</code> in object mode will prompt you to load a mesh to link into the current scene.</em></strong></p>
-<p>[so I’d gotten the numbering a bit wrong ;)]</p>
-<p><img src="doc/006.jpg" /><br /><img src="doc/007.jpg" /><br /><img src="doc/008.jpg" /><br /><img src="doc/009.jpg" /></p>
 </body>
 </html><style>
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {

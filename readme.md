@@ -16,13 +16,13 @@ lr:0.35in -->
 
 > This is a basic outline and demonstration of the things that I've learned while attempting to do this with blender and ImageMagick.
 > 
-> This (I don't beleive) isn't really going to be one of those copy/paste type of things.  You're going to need to become if not allready familiar with [Blender](http://blender.org) and perhaps (of course) have use for interest in knobs in IPLUG or something like.  The blender files use blender's "Cycles" renderer and a minimal amount of compositing which if you're new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find... The results are well worth it.
+> This (I don't believe) isn't really going to be one of those copy/paste type of things.  You're going to need to become if not allready familiar with [Blender](http://blender.org) and perhaps (of course) have use for interest in knobs in IPLUG or something like.  The blender files use blender's "Cycles" renderer and a minimal amount of compositing which if you're new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find... The results are well worth it.
 > 
 > Not every technique (as found in the blender files) is likely documented as there may well be errors in some of the process I jotted down here (a year or so back).  This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!
 
 ![Example 33'rd frame; frame 32 of 64]
 
-![Another Example (flipped 90deg for readability)]
+![Another Example (flipped 90° for readability)]
 
 ## THINGS I MIGHT FORGET AGAIN (Blender)
 
@@ -80,10 +80,10 @@ Scripts and the blender process(s) are known to be working with ...
           - NOTE: we are only looking to animate the Z-axis of our knob.
     - Go back to your main Design or Default view
     - Next we'll create key-frames `@0`, `32` and `64` containing rotations: `-30°`, `-180°` and `-330°`.  
-      we're going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.  
+      we're going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our key-frames to the z-rotation.  
        note: *the `do-blend*` script is set to handle 64 frames (though actually 65 are rendered)*
-      - Rotate on the z-axis -30 deg and **Apply Tranformation** pressing `Ctrl+A` within the mesh view.
-          - *NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select `insert single keyframe` — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.*
+      - Rotate on the z-axis -30 deg and **Apply Transformation** pressing `Ctrl+A` within the mesh view.
+          - *NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select `insert single key-frame` — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.*
           - we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 65 or 33 (counting the 0th) used here, this way our center frame points up at 90 deg.
           - Go to Frame  0 and change Z rotation to -0 degrees. Press `I` and select Rotation.
           - Go to Frame 32 and change Z Rotation to -150. Press `I` and select Rotation.
@@ -157,7 +157,7 @@ Once the mesh is completed, we would apply a boolean difference (might want to r
 
 ## Image-Magick under msys2
 
-You're going to want to kick me reading this knowing full well that image-magick is broke in several distributions; Just skip below and download/install a working version silly.  I'm not a 'nix user, so you're going to have to consult your package-management (or managers) to figure out what versions are going to work for you.  Chances are, if you're on linux (or mac) the package managers aren't lazy and patched the issues or filed a bug report AND of course one would hope that those reports were acted upon by Image-Magick builders/devs.  Its not your package manager's responsibilty to fix issues like this---and they bring you everyhing you use, so be respectful ;)
+You're going to want to kick me reading this knowing full well that image-magick is broke in several distributions; Just skip below and download/install a working version silly.  I'm not a 'nix user, so you're going to have to consult your package-management (or managers) to figure out what versions are going to work for you.  Chances are, if you're on linux (or mac) the package managers aren't lazy and patched the issues or filed a bug report AND of course one would hope that those reports were acted upon by Image-Magick builders/devs.  Its not your package manager's responsibility to fix issues like this---and they bring you everything you use, so be respectful ;)
 
 For a windows user on msys2 to manually install your msys2 imagemagick package, load up msys2 bash and
 
@@ -259,39 +259,8 @@ Emboldened is the working version.
 
 # A Helpful   Blender-Python Script
 
-
-One script was particularly helpful: `space_view3d_move_origin.py`.  
+One script was particularly helpful: [space_view3d_move_origin.py](blender-mods/space_view3d_move_origin.py).  
 I'd placed it into the `./blender-mods` directory.
-
-
-```python
-'''
-BEGIN GPL LICENSE BLOCK
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software Foundation,
-Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-END GPL LICENCE BLOCK
-'''
-
-bl_info = {
-    'name': 'Move origin to selected',
-    'author': '',
-    'version': (0, 0, 1),
-    'blender': (2, 6, 7),
-    'location': '3d view > space bar > Origin Move to Selected',
-    'description': 'in edit mode, sets object origin to the median of selected verts/edges/faces',
-    'wiki_url': '',
-    'tracker_url': '',
-    'category': '3D View'}
-```
 
 - I'm not sure where I got this script.  Maybe from...
 - See: https://gist.github.com/anonymous/5844378
@@ -300,7 +269,7 @@ bl_info = {
 
 
 When you're in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the 3D-cursor to set the center-point of your mesh.  This is particularly useful when you have edited a knob or whatever and you need to manually set its **rotation-center**.  
-*this was handy when setting up the 7-sided boolean cylendars (as in some exaple in here)*
+*this was handy when setting up the 7-sided boolean cylinders (as in some example in here)*
 
 In case you need some help **Installing and configuring the python script**
 
@@ -322,13 +291,6 @@ In case you need some help **Installing and configuring the python script**
 12. **SAVE YOUR SETTINGS AGAIN** by clicking the **Save User Settings** button
 
 ***Note that `Ctrl+Alt+O` in object mode will prompt you to load a mesh to link into the current scene.***
-
-[so I'd gotten the numbering a bit wrong ;)]
-
-![](doc/006.jpg)  
-![](doc/007.jpg)  
-![](doc/008.jpg)  
-![](doc/009.jpg)  
 
 [Set Cycles as Our Renderer]: doc/000.jpg
 [Example 33'rd frame; frame 32 of 64]: doc/001.jpg
