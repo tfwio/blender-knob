@@ -22,7 +22,7 @@ lr:0.35in -->
 
 ![Example 33'rd frame; frame 32 of 64]
 
-![Another Example (flipped 90° for readability)]
+![Another Example]
 
 ## THINGS I MIGHT FORGET AGAIN (Blender)
 
@@ -294,7 +294,7 @@ In case you need some help **Installing and configuring the python script**
 
 [Set Cycles as Our Renderer]: doc/000.jpg
 [Example 33'rd frame; frame 32 of 64]: doc/001.jpg
-[Another Example (flipped 90deg for readability)]: doc/002.png
+[Another Example]: doc/002.png
 [Blender Version]: doc/003.jpg
 [blender screen 1]: doc/004.jpg
 [Transparency-Setting]: doc/005.jpg
