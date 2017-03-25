@@ -18,8 +18,7 @@ lr:0.35in -->
 > 
 > This (I don't beleive) isn't really going to be one of those copy/paste type of things.  You're going to need to become if not allready familiar with [Blender](http://blender.org) and perhaps (of course) have use for interest in knobs in IPLUG or something like.  The blender files use blender's "Cycles" renderer and a minimal amount of compositing which if you're new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find... The results are well worth it.
 > 
-> Not every technique (as found in the blender files) 
-> There may well be errors in some of the process I jotted down here (a year or so back).  This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!
+> Not every technique (as found in the blender files) is likely documented as there may well be errors in some of the process I jotted down here (a year or so back).  This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!
 
 ![Example 33'rd frame; frame 32 of 64]
 
@@ -48,6 +47,8 @@ Scripts and the blender process(s) are known to be working with ...
 
 - **INITIAL STEP**
     - Start up blender.
+    - Set Cycles as Our Renderer  
+      ![Set Cycles as Our Renderer]
     - Delete the box.
     - Set up the scene size.  I used a w/h of `256 x 256`.
     - Change Render settings modifying output path to `//` so that any images rendered will be in the same directory as the blend.
@@ -78,8 +79,9 @@ Scripts and the blender process(s) are known to be working with ...
     - Set this as your last frame or press `E`
           - NOTE: we are only looking to animate the Z-axis of our knob.
     - Go back to your main Design or Default view
-    - Next we'll create key-frames @0, 16 and 33 containing rotations: -30, -180 and -330, but we're starting at -30 degrees (zero'd) so that translates to 0, 150 and 300 deg.  
-      we're going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.
+    - Next we'll create key-frames `@0`, `32` and `64` containing rotations: `-30°`, `-180°` and `-330°`.  
+      we're going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.  
+       note: *the `do-blend*` script is set to handle 64 frames (though actually 65 are rendered)*
       - Rotate on the z-axis -30 deg and **Apply Tranformation** pressing `Ctrl+A` within the mesh view.
           - *NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select `insert single keyframe` — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.*
           - we want a middle keyframe pointed directly up or centered, so it would be best to use an odd number of frames such as the 65 or 33 (counting the 0th) used here, this way our center frame points up at 90 deg.
@@ -104,14 +106,13 @@ They're designed so that you can drag-drop your blender file into them in window
     -  `c:\program files (x86)\blender\blender`
 - Mac or 'nix users are going to have to write their own shell script to render based on whatever windows command file.
 
-**scripts**
+**bash and windows-command scripts**
 
 1. `do-blender-render-*.cmd` Uses blender and render each frame of our mesh-animation.
 2. `do_magick_*-64.cmd` Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).  
 Vertical tile image size widths generated are **96**, **72**, **64**, **48**, **40**, **36**, **32**, **24** and **20**.  Heighth (automated) pending an input parameter depends on the number of projected image-tiles used.
 Look toward the bottom of `ren.sh` to add whatever dimension you like.
     - Modify/clone, read and/or change the above to tailor it to whatever your desired frame-count.
-
 
 # TIPS
 
@@ -255,6 +256,76 @@ Emboldened is the working version.
 [mingw-w64-x86_64-imagemagick-6.9.2.0-1-any.pkg.tar.xz]:  https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.2.0-1-any.pkg.tar.xz/download
 [mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz]:  https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz/download
 
+
+# A Helpful   Blender-Python Script
+
+
+One script was particularly helpful: `space_view3d_move_origin.py`.  
+I'd placed it into the `./blender-mods` directory.
+
+
+```python
+'''
+BEGIN GPL LICENSE BLOCK
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+END GPL LICENCE BLOCK
+'''
+
+bl_info = {
+    'name': 'Move origin to selected',
+    'author': '',
+    'version': (0, 0, 1),
+    'blender': (2, 6, 7),
+    'location': '3d view > space bar > Origin Move to Selected',
+    'description': 'in edit mode, sets object origin to the median of selected verts/edges/faces',
+    'wiki_url': '',
+    'tracker_url': '',
+    'category': '3D View'}
+```
+
+
+When you're in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the cursor to set the center-point of your mesh.  This is particularly useful when you have edited a knob or whatever and you need to manually set its **rotation-center**.  
+*this was handy when setting up the 7-sided boolean cylendars (as in some exaple in here)*
+
+In case you need some help **Installing and configuring the python script**
+
+1. Click your Window-Selector Icon in the 3D-view
+2. Select **User Preferences**
+3. Click **Add-ons** tab at the top
+4. Click on the **Install from file…** button
+5. Check/Enable the script
+6. **SAVE YOUR SETTINGS** by clicking the **Save User Settings** button
+7. Click the **Input** tab on the top of the **User Preferences** page
+8. Expand the node **3D View Global** and Scroll to the bottom of the tree-node
+9. Click the **Add New** button.
+10. Type `object.origin_to_selected` into the text-input box in the upper-left of the added entry-box
+11. Configure the rest of the options...
+    - (for a keyboard shortcut) Select `Keyboard` in the topmost group-box column-header
+    - Click on the Key (probably reads `A`) and depress `O` (upper-case)
+    - Place a check in `Ctrl` and `Alt` check-boxes
+    - [thats what I did at least]
+12. **SAVE YOUR SETTINGS AGAIN** by clicking the **Save User Settings** button
+
+***Note that `Ctrl+Alt+O` in object mode will prompt you to load a mesh to link into the current scene.***
+
+[so I'd gotten the numbering a bit wrong ;)]
+
+![](doc/006.jpg)  
+![](doc/007.jpg)  
+![](doc/008.jpg)  
+![](doc/009.jpg)  
+
+[Set Cycles as Our Renderer]: doc/000.jpg
 [Example 33'rd frame; frame 32 of 64]: doc/001.jpg
 [Another Example (flipped 90deg for readability)]: doc/002.png
 [Blender Version]: doc/003.jpg

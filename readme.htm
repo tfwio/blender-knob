@@ -37,12 +37,13 @@ body {
 <li><a href="#working-x86-image-magick-for-msys2">Working x86 Image Magick for msys2</a></li>
 <li><a href="#working-x64-image-magick-for-msys2">Working x64 Image Magick for msys2</a></li>
 </ul></li>
+<li><a href="#a-helpful-blender-python-script">A Helpful Blender-Python Script</a></li>
 </ul>
 </nav>
 <blockquote>
 <p>This is a basic outline and demonstration of the things that I’ve learned while attempting to do this with blender and ImageMagick.</p>
 <p>This (I don’t beleive) isn’t really going to be one of those copy/paste type of things. You’re going to need to become if not allready familiar with <a href="http://blender.org">Blender</a> and perhaps (of course) have use for interest in knobs in IPLUG or something like. The blender files use blender’s “Cycles” renderer and a minimal amount of compositing which if you’re new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find… The results are well worth it.</p>
-<p>Not every technique (as found in the blender files) There may well be errors in some of the process I jotted down here (a year or so back). This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
+<p>Not every technique (as found in the blender files) is likely documented as there may well be errors in some of the process I jotted down here (a year or so back). This is just an initial dump of my notes with a little editing and am glad I jotted everything down since I had to re-read it a few times to catch back up to par—so please do bare with me as I refurbish over time!</p>
 </blockquote>
 <figure>
 <img src="doc/001.jpg" alt="Example 33’rd frame; frame 32 of 64" /><figcaption>Example 33’rd frame; frame 32 of 64</figcaption>
@@ -92,6 +93,7 @@ body {
 <li><strong>INITIAL STEP</strong>
 <ul>
 <li>Start up blender.</li>
+<li>Set Cycles as Our Renderer<br /> <img src="doc/000.jpg" alt="Set Cycles as Our Renderer" /></li>
 <li>Delete the box.</li>
 <li>Set up the scene size. I used a w/h of <code>256 x 256</code>.</li>
 <li>Change Render settings modifying output path to <code>//</code> so that any images rendered will be in the same directory as the blend.</li>
@@ -133,7 +135,7 @@ body {
 <li>NOTE: we are only looking to animate the Z-axis of our knob.</li>
 </ul></li>
 <li>Go back to your main Design or Default view</li>
-<li>Next we’ll create key-frames @0, 16 and 33 containing rotations: -30, -180 and -330, but we’re starting at -30 degrees (zero’d) so that translates to 0, 150 and 300 deg.<br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.</li>
+<li>Next we’ll create key-frames <code>@0</code>, <code>32</code> and <code>64</code> containing rotations: <code>-30°</code>, <code>-180°</code> and <code>-330°</code>.<br /> we’re going to want to set the initial rotation of our down-pointing knob to -30 deg and then apply our keyframes to the z-rotation.<br /> note: <em>the <code>do-blend*</code> script is set to handle 64 frames (though actually 65 are rendered)</em></li>
 <li>Rotate on the z-axis -30 deg and <strong>Apply Tranformation</strong> pressing <code>Ctrl+A</code> within the mesh view.
 <ul>
 <li><em>NOTE: the best way to set the z-rotation-transform is by right-clicking the z-transform button/slider thing and select <code>insert single keyframe</code> — this will only add the Z-Rotation transform and not all other transformations, keeping things clean.</em></li>
@@ -165,7 +167,7 @@ body {
 </ul></li>
 <li>Mac or ’nix users are going to have to write their own shell script to render based on whatever windows command file.</li>
 </ul>
-<p><strong>scripts</strong></p>
+<p><strong>bash and windows-command scripts</strong></p>
 <ol>
 <li><code>do-blender-render-*.cmd</code> Uses blender and render each frame of our mesh-animation.</li>
 <li><code>do_magick_*-64.cmd</code> Uses Image Magick to tile and stitch each exported PNG file into a single image and resizes several dimensions vertically (for IPLUG graphics).<br />Vertical tile image size widths generated are <strong>96</strong>, <strong>72</strong>, <strong>64</strong>, <strong>48</strong>, <strong>40</strong>, <strong>36</strong>, <strong>32</strong>, <strong>24</strong> and <strong>20</strong>. Heighth (automated) pending an input parameter depends on the number of projected image-tiles used. Look toward the bottom of <code>ren.sh</code> to add whatever dimension you like.
@@ -263,6 +265,59 @@ So...
 <li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.2.0-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.2.0-1-any.pkg.tar.xz</a></li>
 <li><a href="https://sourceforge.net/projects/msys2/files/REPOS/MINGW/x86_64/mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz/download">mingw-w64-x86_64-imagemagick-6.9.1.8-1-any.pkg.tar.xz</a></li>
 </ul>
+<h1 id="a-helpful-blender-python-script">A Helpful Blender-Python Script</h1>
+<p>One script was particularly helpful: <code>space_view3d_move_origin.py</code>.<br />I’d placed it into the <code>./blender-mods</code> directory.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co">&#39;&#39;&#39;</span>
+<span class="co">BEGIN GPL LICENSE BLOCK</span>
+<span class="co">This program is free software; you can redistribute it and/or</span>
+<span class="co">modify it under the terms of the GNU General Public License</span>
+<span class="co">as published by the Free Software Foundation; either version 2</span>
+<span class="co">of the License, or (at your option) any later version.</span>
+<span class="co">This program is distributed in the hope that it will be useful,</span>
+<span class="co">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="co">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.    See the</span>
+<span class="co">GNU General Public License for more details.</span>
+<span class="co">You should have received a copy of the GNU General Public License</span>
+<span class="co">along with this program; if not, write to the Free Software Foundation,</span>
+<span class="co">Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.</span>
+<span class="co">END GPL LICENCE BLOCK</span>
+<span class="co">&#39;&#39;&#39;</span>
+
+bl_info = {
+    <span class="st">&#39;name&#39;</span>: <span class="st">&#39;Move origin to selected&#39;</span>,
+    <span class="co">&#39;author&#39;</span>: <span class="st">&#39;&#39;</span>,
+    <span class="co">&#39;version&#39;</span>: (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>),
+    <span class="co">&#39;blender&#39;</span>: (<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">7</span>),
+    <span class="co">&#39;location&#39;</span>: <span class="st">&#39;3d view &gt; space bar &gt; Origin Move to Selected&#39;</span>,
+    <span class="co">&#39;description&#39;</span>: <span class="st">&#39;in edit mode, sets object origin to the median of selected verts/edges/faces&#39;</span>,
+    <span class="co">&#39;wiki_url&#39;</span>: <span class="st">&#39;&#39;</span>,
+    <span class="co">&#39;tracker_url&#39;</span>: <span class="st">&#39;&#39;</span>,
+    <span class="co">&#39;category&#39;</span>: <span class="st">&#39;3D View&#39;</span>}</code></pre>
+<p>When you’re in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the cursor to set the center-point of your mesh. This is particularly useful when you have edited a knob or whatever and you need to manually set its <strong>rotation-center</strong>.<br /><em>this was handy when setting up the 7-sided boolean cylendars (as in some exaple in here)</em></p>
+<p>In case you need some help <strong>Installing and configuring the python script</strong></p>
+<ol>
+<li>Click your Window-Selector Icon in the 3D-view</li>
+<li>Select <strong>User Preferences</strong></li>
+<li>Click <strong>Add-ons</strong> tab at the top</li>
+<li>Click on the <strong>Install from file…</strong> button</li>
+<li>Check/Enable the script</li>
+<li><strong>SAVE YOUR SETTINGS</strong> by clicking the <strong>Save User Settings</strong> button</li>
+<li>Click the <strong>Input</strong> tab on the top of the <strong>User Preferences</strong> page</li>
+<li>Expand the node <strong>3D View Global</strong> and Scroll to the bottom of the tree-node</li>
+<li>Click the <strong>Add New</strong> button.</li>
+<li>Type <code>object.origin_to_selected</code> into the text-input box in the upper-left of the added entry-box</li>
+<li>Configure the rest of the options…
+<ul>
+<li>(for a keyboard shortcut) Select <code>Keyboard</code> in the topmost group-box column-header</li>
+<li>Click on the Key (probably reads <code>A</code>) and depress <code>O</code> (upper-case)</li>
+<li>Place a check in <code>Ctrl</code> and <code>Alt</code> check-boxes</li>
+<li>[thats what I did at least]</li>
+</ul></li>
+<li><strong>SAVE YOUR SETTINGS AGAIN</strong> by clicking the <strong>Save User Settings</strong> button</li>
+</ol>
+<p><strong><em>Note that <code>Ctrl+Alt+O</code> in object mode will prompt you to load a mesh to link into the current scene.</em></strong></p>
+<p>[so I’d gotten the numbering a bit wrong ;)]</p>
+<p><img src="doc/006.jpg" /><br /><img src="doc/007.jpg" /><br /><img src="doc/008.jpg" /><br /><img src="doc/009.jpg" /></p>
 </body>
 </html><style>
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
