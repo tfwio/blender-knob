@@ -294,7 +294,7 @@ bl_info = {
 ```
 
 
-When you're in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the cursor to set the center-point of your mesh.  This is particularly useful when you have edited a knob or whatever and you need to manually set its **rotation-center**.  
+When you're in mesh mode, (where you edit mesh vertexes, lines or faces; not in object-mode) you might want to use the 3D-cursor to set the center-point of your mesh.  This is particularly useful when you have edited a knob or whatever and you need to manually set its **rotation-center**.  
 *this was handy when setting up the 7-sided boolean cylendars (as in some exaple in here)*
 
 In case you need some help **Installing and configuring the python script**
