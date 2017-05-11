@@ -259,7 +259,9 @@ Emboldened is the working version.
 
 # A Helpful   Blender-Python Script
 
-One script was particularly helpful: [space_view3d_move_origin.py](blender-mods/space_view3d_move_origin.py).  
+[HDRI-lighting-Shortcut](https://github.com/Nikos-Prinios/HDRI-lighting-Shortcut) is usful in rapidizing a better lighting atmo-sphere.
+
+Another particularly helpful script: [space_view3d_move_origin.py](blender-mods/space_view3d_move_origin.py).  
 I'd placed it into the `./blender-mods` directory.
 
 - I'm not sure where I got this script.  Maybe from...
