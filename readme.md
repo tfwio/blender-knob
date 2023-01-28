@@ -14,6 +14,15 @@ top:0.75in
 bottom:0.75in
 lr:0.35in -->
 
+
+**see also**…
+
+- 2D design alternative: [Knob Studio](https://iplug2.discourse.group/t/knob-studio-graphic-design-tool/286) v1.0.0.5 — a 2D knob graphics creator does a fine job of making knobs.
+- 2022-12-12: added python (`PILlow`) script for stitching images ([./stitch.py](./stitch.py)) of this document rather than using image-magick.  The script requires you to `pip install PILlow`.
+
+# INTRO
+
+
 > This is a basic outline and demonstration of the things that I've learned while attempting to do this with blender and ImageMagick.
 > 
 > This (I don't believe) isn't really going to be one of those copy/paste type of things.  You're going to need to become if not allready familiar with [Blender](http://blender.org) and perhaps (of course) have use for interest in knobs in IPLUG or something like.  The blender files use blender's "Cycles" renderer and a minimal amount of compositing which if you're new to can be a bit mind-bending to wrap your mind around at first glance—but, as you may find... The results are well worth it.
@@ -93,6 +102,56 @@ Scripts and the blender process(s) are known to be working with ...
     - Within the 'Dopesheet' view, select `Z Euler Rotation` by clicking on it and press `T` and select `Linear` interpolation.
 
 ![blender screen 1]
+
+
+
+# PILlow Script to stitch images
+
+So its a little simpler to use python for stitching the generated frame-images if you want to skip using image-magick…
+
+read the [actual script: `./stitch.py` here](./stitch.py).
+
+## how to use this script
+
+- seems to work in python 7 and 8
+  https://pillow.readthedocs.io/en/stable/  
+- install Pillow into your preferred python shell.
+- https://pypi.org/project/Pillow/  
+
+
+the script will use and sort all the images in a directory supplied to the script.
+
+basically, if you feed the script a path containing the images 0.png to 64.png (just the directory path) the script will write a file "stitched.png" by default in the current directory.  
+so executing (in bash shell) `./stitch.py "./my-knob-frames"` will take all the images in the directory `./my-knob-frames`, sort them and stitch them vertical (hack it otherwise) into a single "stitched" image (`./stitched.png` by default).
+
+- added a few parameter options last minute
+
+## script-usage
+
+```text
+$ ./stitch.py --help
+usage: stitch.py [-h] [--horiz] [--ext EXT] [--out OUT] [--size SIZE] dir
+
+Specify input path (`dir`). input path should contain no more or less than the
+images you want stitched. --- We are expecting images named something like
+0.png...65.png. --- the script calculates the number of frames based on the
+count of images found in the provided directory/path.
+
+positional arguments:
+  dir                   supply one input directory
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --horiz, -hz          Flag: stitch horizontally
+  --ext EXT, -x EXT     [default=`png`] file extension sought in search
+                        directory
+  --out OUT, -o OUT     [default=`./stitched.png`] provide full path to png
+                        file including extension
+  --size SIZE, -s SIZE  (default=24) is used by default (implying 24x24
+                        generated frame-images)
+```
+
+
 
 # Scripts Overview
 
